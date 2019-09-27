@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["andy@civo.com"]
 
   spec.summary       = %q{Sends log output, errors, etc to the ActiveTracker application}
-  spec.description   = %q{ActiveTracker is a self-hosted website and this rubygem to track user requests through your logs, see errors raise and queue usage/failures}
+  spec.description   = %q{ActiveTracker is a self-hosted website (combined with this rubygem) to track user requests through your logs, see errors raise and queue usage/failures}
   spec.homepage      = "https://github.com/civo/activetracker"
   spec.license       = "MIT"
 
