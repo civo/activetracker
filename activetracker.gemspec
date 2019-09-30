@@ -4,7 +4,7 @@ require "active_tracker/version"
 
 Gem::Specification.new do |spec|
   spec.platform      = Gem::Platform::RUBY
-  spec.name          = "ActiveTracker"
+  spec.name          = "activetracker"
   spec.version       = ActiveTracker::VERSION
   spec.authors       = ["Andy Jeffries"]
   spec.email         = ["andy@civo.com"]

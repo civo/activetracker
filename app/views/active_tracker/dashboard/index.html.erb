@@ -1,0 +1,85 @@
+<div class="flex w-full justify-between items-center">
+  <h1 class="text-xl text-blue-900 flex-1">Dashboard</h1>
+  <form action="">
+    <input type='text' class="bg-gray-100 border-2 border-gray-400 px-2 py-1 rounded-lg" placeholder="Search for request">
+  </form>
+</div>
+
+<div class="bg-white shadow mt-4 rounded-b-lg" style="">
+  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+    <div class="w-24">Method</div>
+    <div class="flex-1">Path</div>
+    <div class="w-24">Response</div>
+    <div class="w-32 text-right">When</div>
+  </div>
+  <div class='bg-blue-700 text-gray-200 uppercase text-sm text-center py-3 shadow-lg cursor-pointer flex justify-center items-center'>
+    <span class="w-4 h-4 inline-block text-gray-200 mr-3">
+      <%= inline_svg "active_tracker/reload.svg" %>
+    </span>
+    New requests available
+  </div>
+
+  <div class="flex flex-grow border-b-2 border-gray-200 text-gray-600 px-4 text-sm py-6">
+    <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold">GET</span></div>
+    <div class="flex-1">/v2/kubernetes/cluster/e52c5517-eb46-4ba5-be56-90aa7436f26a</div>
+    <div class="w-24"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold">200</span></div>
+    <div class="w-32 text-right">2 minutes ago</div>
+  </div>
+  <div class="flex flex-grow border-b-none border-gray-200 text-gray-600 px-4 text-sm py-6">
+    <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold">GET</span></div>
+    <div class="flex-1">/v2/kubernetes/cluster/e52c5517-eb46-4ba5-be56-90aa7436f26a</div>
+    <div class="w-24"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold">200</span></div>
+    <div class="w-32 text-right">2 minutes ago</div>
+  </div>
+</div>
+
+<div class="flex flex-grow mt-10 items-center">
+  <div class="rounded-lg bg-white text-sm text-gray-600 flex-1">
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Method</div>
+      <div class="pl-4"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold">GET</span></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Path</div>
+      <div class="pl-4">/v2/kubernetes/cluster/e52c5517-eb46-4ba5-be56-90aa7436f26a</div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Method</div>
+      <div class="pl-4"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold">GET</span></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">When</div>
+      <div class="pl-4">2 minutes ago</div>
+    </div>
+  </div>
+
+  <div class="ml-8 text-center">
+    <%= image_tag "https://images.unsplash.com/photo-1521227889351-bf6f5b2e4e37?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2425&q=80", class:"w-20 h-20 object-cover rounded-full inline-block border-2 border-gray-500" %>
+    <h2 class="text-lg text-blue-900">Mohammed al Bahin</h2>
+    <a href="mailto:#" class="text-sm text-blue-600 hover:text-blue-600 hover:underline">mohammed.bahin@somethingcool.co.uk</a>
+  </div>
+</div>
+
+<div class="mt-10">
+  <div>
+    <a href="#" class="text-lg mr-3 text-blue-600">Request</a>
+    <a href="#" class="text-lg mr-3 text-gray-500">Response</a>
+    <a href="#" class="text-lg mr-3 text-gray-500">Logs</a>
+  </div>
+
+  <div class="bg-black text-white font-mono whitespace-pre text-sm rounded-lg mt-2">
+    {
+      "id": "b177ae0e-60fa-11e5-be02-5cf9389be614",
+      "openstack_server_id": "369588f7-de40-4eca-bc8d-4c2dbc1cc7f3",
+      "hostname": "b177ae0e-60fa-11e5-be02-5cf9389be614.clients.civo.com",
+      "reverse_dns": null,
+      "size": "g2.xsmall",
+      "region": "lon1",
+      "network_id": "63906834-2455-4b72-b0c4-77617ef18b4e",
+      "private_ip": "10.0.0.4",
+      "public_ip": "31.28.66.181",
+      "pseudo_ip": "172.31.0.230",
+      "template_id": "f80a1698-8933-414f-92ac-a36d9cfc4ac9"
+    }
+  </div>
+</div>

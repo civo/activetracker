@@ -1,0 +1,10 @@
+<% current = request.path[plugin.nav_url] %>
+<a href="<%= plugin.nav_url %>" class="flex items-center mb-3 <%= current ? "text-blue-700" : "text-gray-600" %> hover:text-blue-700">
+  <div class="">
+    <%= plugin.nav_svg %>
+  </div>
+  <div class='ml-2'>
+    <%= plugin.nav_title %>
+  </div>
+</a>
+
