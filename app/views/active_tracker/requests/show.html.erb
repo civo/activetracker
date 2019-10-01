@@ -1,0 +1,56 @@
+<div class="flex w-full justify-between items-center">
+  <h1 class="text-xl text-blue-900 flex-1">Request</h1>
+</div>
+
+<div class="flex flex-grow mt-10 items-center">
+  <div class="rounded-lg bg-white text-sm text-gray-600 flex-1">
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Method</div>
+      <div class="pl-4"><span class="bg-gray-200 text-gray-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:method] %></span></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Path</div>
+      <div class="pl-4"><%= @request.tags[:url] %></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Status</div>
+      <% if @request.tags[:status].start_with?("2") %>
+        <div class="pl-4"><span class="bg-green-100 text-green-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:status] %></span></div>
+      <% elsif @request.tags[:status].start_with?("3") %>
+        <div class="pl-4"><span class="bg-yellow-100 text-yellow-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:status] %></span></div>
+      <% elsif @request.tags[:status].start_with?("4") %>
+        <div class="pl-4"><span class="bg-orange-100 text-orange-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:status] %></span></div>
+      <% elsif @request.tags[:status].start_with?("5") %>
+        <div class="pl-4"><span class="bg-red-100 text-red-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:status] %></span></div>
+      <% end %>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">When</div>
+      <div class="pl-4"><%= @request.log_at.strftime("%-d %B %Y, %H:%M:%S %z") %></div>
+    </div>
+  </div>
+
+  <% if @request.tags[:user_avatar_url] || @request.tags[:user_name] || @request.tags[:user_email] %>
+    <div class="ml-8 text-center">
+      <% if @request.tags[:user_avatar_url] %>
+        <%= image_tag @request.tags[:user_avatar_url], class:"w-20 h-20 object-cover rounded-full inline-block border-2 border-gray-500" %>
+      <% end %>
+      <% if @request.tags[:user_name] %>
+        <h2 class="text-lg text-blue-900"><%= @request.tags[:user_name] %></h2>
+      <% end %>
+      <% if @request.tags[:user_email] %>
+        <a href="mailto:<%= @request.tags[:user_email] %>" class="text-sm text-blue-600 hover:text-blue-600 hover:underline"><%= @request.tags[:user_email] %></a>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-10 flex-grow-0">
+  <div>
+    <a href="#" class="text-lg mr-3 text-blue-600 js-activetracker-tab" data-tab="logs">Logs</a>
+    <a href="#" class="text-lg mr-3 text-gray-500 js-activetracker-tab" data-tab="response">Response</a>
+  </div>
+
+  <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content" data-content="logs"><%= @request.log.strip %></div>
+  <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content hidden" data-content="response"><%= @request.output.strip %></div>
+</div>

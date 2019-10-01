@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 initializer "activetracker.rb" do
-  File.read(ActiveTracker::Engine.root.join("lib", "templates", "initializer.rb"))
+  File.read(ActiveTracker::Engine.root.join("integration", "templates", "initializer.rb"))
 end
 
 route "ActiveTracker::Router.load"

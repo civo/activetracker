@@ -14,13 +14,23 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Then run:
 
-    $ gem install activetracker
+    $ bundle exec rake activetracker:install
 
 ## Usage
 
-TODO: Write usage instructions here
+
+
+During a request cycle you can use to custom tag requests:
+
+```
+ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
+```
+
+If you want to have the user details shown alongside a request, you can use standard tag names of `user_avatar_url`, `user_name` and `user_email`.
+`
+
 
 ## Development
 

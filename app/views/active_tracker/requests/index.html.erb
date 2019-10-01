@@ -1,0 +1,56 @@
+<div class="flex w-full justify-between items-center">
+  <h1 class="text-xl text-blue-900 flex-1">Requests</h1>
+  <form action="">
+    <input type='text' class="bg-gray-100 border-2 border-gray-400 px-2 py-1 rounded-lg" placeholder="Search for request">
+  </form>
+</div>
+
+<div class="bg-white shadow mt-4 rounded-b-lg" style="">
+  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+    <div class="w-24">Method</div>
+    <div class="flex-1">Path</div>
+    <div class="w-24">Response</div>
+    <div class="w-32 text-right">Time</div>
+  </div>
+  <div class='bg-blue-700 text-gray-200 uppercase text-sm text-center py-3 shadow-lg cursor-pointer flex justify-center items-center'>
+    <span class="w-4 h-4 inline-block text-gray-200 mr-3">
+      <%= activetracker_inline_svg "active_tracker/reload.svg" %>
+    </span>
+    New requests available
+  </div>
+
+<!--
+  TODO: make Ajax loadable by default
+ -->
+  <% @requests.each do |request| %>
+    <% border_size = @requests.last == request ? "none" : "2" %>
+    <a href='<%= Rails.application.routes.url_helpers.active_tracker_request_path(request.id) %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
+      <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:method] %></span></div>
+      <div class="flex-1 break-all"><%= request.tags[:url] %>
+        <% showable_tags = (request.tags.keys - %i{url method status duration user_avatar_url}) %>
+        <% if showable_tags.any? %>
+          <br />
+          <% showable_tags.each do |k| %>
+            <span class="bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= "#{k}:#{request.tags[k]}" %></span>
+          <% end %>
+        <% end %>
+        <!--
+          TODO: make these links that further filters the results
+        -->
+      </div>
+      <% if request.tags[:status].start_with?("2") %>
+        <div class="w-24"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+      <% elsif request.tags[:status].start_with?("3") %>
+        <div class="w-24"><span class="bg-yellow-100 text-yellow-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+      <% elsif request.tags[:status].start_with?("4") %>
+        <div class="w-24"><span class="bg-orange-200 text-orange-700 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+      <% elsif request.tags[:status].start_with?("5") %>
+        <div class="w-24"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+      <% end %>
+      <div class="w-32 text-center">
+        <b class="block"><%= request.tags[:duration] %></b>
+        <%= request.log_at.strftime("%-d %B %Y %H:%M:%S %z") %>
+      </div>
+    </a>
+  <% end -%>
+</div>

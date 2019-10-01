@@ -2,6 +2,10 @@ module ActiveTracker
   module Plugin
     class Request < Base
       def self.register
+        if defined?(Rails)
+          Rails.application.middleware.delete Rails::Rack::Logger
+          Rails.application.middleware.insert_before Rack::Sendfile, ActiveTracker::RailsLogger
+        end
         true
       end
 
@@ -21,6 +25,27 @@ module ActiveTracker
       def self.nav_title
         "Requests"
       end
+
+      def self.filters=(value)
+        @filters = value
+      end
+
+      def self.filters
+        @filters ||= ["/#{ActiveTracker::Configuration.mountpoint}"]
+      end
+
+      def self.current_tags_clear
+        @tags = {}
+      end
+
+      def self.tag_current(tags = {})
+        @tags = @tags.merge(tags)
+      end
+
+      def self.current_tags
+        @tags
+      end
+
     end
   end
 end

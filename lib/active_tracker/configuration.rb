@@ -1,7 +1,5 @@
 module ActiveTracker
   class Configuration
-    cattr_accessor :redis_url
-
     def self.plugins
       @plugins ||= [
         ActiveTracker::Plugin::Request,
@@ -25,6 +23,8 @@ module ActiveTracker
       end
 
       @plugins = items.dup
+      ActiveTracker::Router.reload
+      @plugins
     end
 
     def self.redis_url
@@ -32,7 +32,9 @@ module ActiveTracker
     end
 
     def self.redis_url=(url)
-      # TODO validate it begins with redis://
+      unless url.start_with?("redis://")
+        raise PluginInvalidError.new("redis_url isn't a valid Redis URL - should begin with redis://")
+      end
       @redis_url = url
     end
 

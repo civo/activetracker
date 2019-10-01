@@ -1,7 +1,11 @@
 module ActiveTracker
   class RequestsController < ApplicationController
     def index
-      render plain: "Hello requests"
+      @requests = ActiveTracker::Model.all("Request")[0,20]
+    end
+
+    def show
+      @request = ActiveTracker::Model.find(params[:id])
     end
   end
 end

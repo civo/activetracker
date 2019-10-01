@@ -9,7 +9,7 @@
     <%= javascript_include_tag 'active_tracker/active_tracker' %>
   </head>
 
-  <body class="bg-gray-300 p-3">
+  <body class="bg-gray-300 p-3 pb-10">
     <div class="container mx-auto">
       <header class="border-b-2 border-gray-400 flex pb-3 items-center">
         <div class="flex-1">
@@ -18,22 +18,26 @@
         <div class="flex-1 text-right">
           <button class="border-2 border-blue-600 px-3 py-2 rounded-lg">
             <div class="w-4 h-4 text-blue-600">
-              <%= inline_svg "active_tracker/reload.svg" %>
+              <%= activetracker_inline_svg "active_tracker/reload.svg" %>
             </div>
           </button>
         </div>
       </header>
 
       <div class="mt-5 flex">
-        <nav class='w-48 mt-1'>
+        <nav class='w-48 mt-1 mr-8'>
           <% ActiveTracker::Configuration.plugins.each do |plugin| %>
             <%= render "active_tracker/common/plugin_nav", plugin: plugin %>
           <% end -%>
         </nav>
-        <article class="flex-1">
+        <article class="flex-1 min-w-0">
           <%= yield %>
         </article>
       </div>
+    </div>
+
+    <div class="container mx-auto text-sm text-gray-600 text-center mt-6 pt-3 border-t-2 border-gray-400">
+      ActionTracker is an <%= link_to "open-source project", "https://github.com/civo/activetracker", class:"text-blue-600" %> from <%= link_to "Civo", "https://www.civo.com", class:"text-blue-600" %>.<br />Released under the MIT licence, but copyright &copy; 2019 Civo Ltd and the ActionTracker contributors.
     </div>
   </body>
 </html>
