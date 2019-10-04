@@ -1,6 +1,6 @@
 # ActiveTracker
 
-ActiveTracker is a self-hosted website (combined with this rubygem) to track user requests through your logs, see errors raise and queue usage/failures.
+ActiveTracker is a Ruby gem that you install to your application to track user requests through your logs, see errors raised, queue usage/failures along with other things configured via a plugin architecture.
 
 ## Installation
 
@@ -20,9 +20,7 @@ Then run:
 
 ## Usage
 
-
-
-During a request cycle you can use to custom tag requests:
+During a request cycle you can add custom tags to requests:
 
 ```
 ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
