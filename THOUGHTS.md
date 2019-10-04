@@ -44,3 +44,9 @@ ActiveTracker::Plugin::Schedule.trigger(job)
 # Tag the current request with a key and value (both are strings/string-like)
 ActiveTracker::Plugin::Request.tag(key, value)
 ```
+
+## ActiveTracker
+
+Authentication lambda or password
+Limit per page setting
+Configuration per plugin mechanism - e.g. filters for requests, threshold for slow queries, ignored exceptions
