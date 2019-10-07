@@ -9,5 +9,6 @@ module ActiveTracker
       end
     end
 
+    config.assets.precompile += %w( active_tracker/active_tracker.js active_tracker/active_tracker.css )
   end
 end
