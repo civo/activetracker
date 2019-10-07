@@ -37,7 +37,7 @@ module ActiveTracker
 
     def self.save(type, data, tags: {}, data_type: nil, expiry: 7.days, log_at: Time.current)
       key = PREFIX + "/#{type}/#{log_at.strftime("%Y%m%d%H%M%S")}"
-      converted_tags = tags.sort_by { |k,v| k.to_s }.map {|k,v| "#{k}:#{CGI.escape(v)}"}
+      converted_tags = tags.sort_by { |k,v| k.to_s }.map {|k,v| "#{k}:#{CGI.escape(v.to_s)}"}
       if converted_tags.any?
         key = key + "/" + converted_tags.join("/")
       end

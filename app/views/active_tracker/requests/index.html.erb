@@ -27,7 +27,7 @@
     <a href='<%= Rails.application.routes.url_helpers.active_tracker_request_path(request.id) %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
       <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:method] %></span></div>
       <div class="flex-1 break-all"><%= request.tags[:url] %>
-        <% showable_tags = (request.tags.keys - %i{url method status duration user_avatar_url}) %>
+        <% showable_tags = (request.tags.keys - %i{url method status duration user_avatar_url params}) %>
         <% if showable_tags.any? %>
           <br />
           <% showable_tags.each do |k| %>
