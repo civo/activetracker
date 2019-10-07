@@ -46,6 +46,17 @@ module ActiveTracker
       @mountpoint = path
     end
 
+    def self.authentication(&block)
+      if block
+        @authentication = block
+      end
+      @authentication ||= nil
+    end
+
+    def self.authentication=(value)
+      @authentication = value
+    end
+
     class PluginInvalidError < ActiveTracker::Error ; end
   end
 end
