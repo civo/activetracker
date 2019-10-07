@@ -16,25 +16,64 @@ And then execute:
 
 Then run:
 
-    $ bundle exec rake activetracker:install
+    $ bundle exec rails activetracker:install
 
-## Usage
+## Configuration
 
-During a request cycle you can add custom tags to requests:
+After you run the `rails activetracker:install` command, you will have a file called `activetracker.rb` in `config/initializers`. This file controls which ActiveTracker plugins are enabled and configuring ActiveTracker as a whole as well as each individual plugin.
+
+Configuring the list of plugins is as easy as listing them:
 
 ```
-ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
+ActiveTracker::Configuration.plugins = [
+  ActiveTracker::Plugin::Request,
+  ActiveTracker::Plugin::Exception,
+]
 ```
 
-If you want to have the user details shown alongside a request, you can use standard tag names of `user_avatar_url`, `user_name` and `user_email`.
-`
+This will enable any Rails integration necessary and add them to the left bar.
 
+ActiveTracker stores its data in Redis. We recommend a separate Redis installation for this, with a memory limit set and configured to automatically delete least recently used items - like this:
 
-## Development
+```
+maxmemory 250mb
+maxmemory-policy allkeys-lru
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+You should point ActiveTracker to your Redis server within the `activetracker.rb` initializer with:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+ActiveTracker::Configuration.redis_url = "redis://localhost:6379/15"
+```
+
+You can choose to have ActiveTracker available anywhere if you don't like the default of `/activetracker`:
+
+```
+ActiveTracker::Configuration.mountpoint = "debugger"
+```
+
+If you want to setup authentication for your installation:
+
+```
+ActiveTracker::Configuration.authentication = "username:password"
+
+# or using a proc:
+
+ActiveTracker::Configuration.authentication do
+  false unless params[:password] == "password"
+end
+```
+
+The first example uses HTTP Basic authentication and the latter will reject unauthenticated requests with 404 (so as not to give away its existence). These are executed in the context of a controller, but it doesn't descend from ApplicationController, so you can't use any authentication methods defined there (if you wish to `extend` or `include` them on `ActiveTracker::BaseController` you can though).
+
+## Individual plugins
+
+* [Request](doc/request.md)
+* TODO
+
+## Writing plugins
+
+If you would like to write a plugin, the easiest example to copy is ... TODO
 
 ## Contributing
 
