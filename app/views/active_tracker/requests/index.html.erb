@@ -12,16 +12,14 @@
     <div class="w-24">Response</div>
     <div class="w-32 text-right">Time</div>
   </div>
-  <div class='bg-blue-700 text-gray-200 uppercase text-sm text-center py-3 shadow-lg cursor-pointer flex justify-center items-center'>
+<!--   <div class='bg-blue-700 text-gray-200 uppercase text-sm text-center py-3 shadow-lg cursor-pointer flex justify-center items-center'>
     <span class="w-4 h-4 inline-block text-gray-200 mr-3">
       <%= activetracker_inline_svg "active_tracker/reload.svg" %>
     </span>
     New requests available
   </div>
-
-<!--
-  TODO: make Ajax loadable by default
  -->
+
   <% @requests.each do |request| %>
     <% border_size = @requests.last == request ? "none" : "2" %>
     <a href='<%= ActiveTracker::Plugin::Request.root_path +  "/requests/#{request.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">

@@ -91,7 +91,7 @@ module ActiveTracker
           data_type: "full",
           expiry: 7.days,
           log_at: Time.current
-        )
+        ) if ActiveTracker::Plugin::Request.current_tags.any?
       end
 
       def self.filter_request?(path)
