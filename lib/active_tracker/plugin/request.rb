@@ -40,6 +40,10 @@ module ActiveTracker
         "Requests"
       end
 
+      def self.root_path
+        "/#{ActiveTracker::Configuration.mountpoint}"
+      end
+
       def self.filters=(value)
         @filters = value
       end
