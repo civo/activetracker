@@ -1,7 +1,7 @@
 module ActiveTracker
   class Configuration
     def self.plugins
-      @plugins ||= [
+      @@plugins ||= [
         ActiveTracker::Plugin::Request,
         # ActiveTracker::Plugin::Schedule,
         # ActiveTracker::Plugin::Exception,
@@ -10,7 +10,7 @@ module ActiveTracker
         # ActiveTracker::Plugin::Event,
         # ActiveTracker::Plugin::ActiveRecord,
       ]
-      @plugins
+      @@plugins
     end
 
     def self.plugins=(items)
@@ -22,39 +22,39 @@ module ActiveTracker
         end
       end
 
-      @plugins = items.dup
+      @@plugins = items.dup
       ActiveTracker::Router.reload
-      @plugins
+      @@plugins
     end
 
     def self.redis_url
-      @redis_url ||= "redis://localhost:6379/15"
+      @@redis_url ||= "redis://localhost:6379/15"
     end
 
     def self.redis_url=(url)
       unless url.start_with?("redis://")
         raise PluginInvalidError.new("redis_url isn't a valid Redis URL - should begin with redis://")
       end
-      @redis_url = url
+      @@redis_url = url
     end
 
     def self.mountpoint
-      @mountpoint ||= "activetracker"
+      @@mountpoint ||= "activetracker"
     end
 
     def self.mountpoint=(path)
-      @mountpoint = path
+      @@mountpoint = path
     end
 
     def self.authentication(&block)
       if block
-        @authentication = block
+        @@authentication = block
       end
-      @authentication ||= nil
+      @@authentication ||= nil
     end
 
     def self.authentication=(value)
-      @authentication = value
+      @@authentication = value
     end
 
     class PluginInvalidError < ActiveTracker::Error ; end

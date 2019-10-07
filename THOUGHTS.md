@@ -47,6 +47,4 @@ ActiveTracker::Plugin::Request.tag(key, value)
 
 ## ActiveTracker
 
-Authentication lambda or password
-Limit per page setting
 Configuration per plugin mechanism - e.g. filters for requests, threshold for slow queries, ignored exceptions

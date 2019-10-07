@@ -52,3 +52,5 @@
     </a>
   <% end -%>
 </div>
+
+<%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>

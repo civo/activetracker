@@ -27,3 +27,5 @@ ActiveTracker::Configuration.redis_url = "redis://localhost:6379/15"
 #   false unless params[:password] == "password"
 # end
 
+# If you would like a particular number of items per page
+# ActiveTracker::Plugin::Request.per_page = 20

@@ -1,0 +1,22 @@
+<div class="w-full mt-4 flex justify-between">
+  <% if duration %>
+    <div class="text-sm mb-2 text-gray-700">Returned <b class="font-bold"><%= pluralize pagination[:total], "result" %></b> in <b class="font-bold"><%= duration.to_i %>ms</b></div>
+  <% end %>
+  <div>
+    <a href='<%= insert_page_to_url(url, 1) %>' class="px-2 py-1 border-gray-300 bg-white text-sm border text-gray-700 rounded">First</a>
+    <% if pagination[:page] > 1 %>
+      <a href='<%= insert_page_to_url(url, pagination[:page] - 1) %>' class="px-2 py-1 border-gray-300 bg-white text-sm border text-gray-700 rounded">Prev</a>
+    <% end %>
+    <% pagination[:window].each do |page| %>
+      <% if page == pagination[:page] %>
+        <span class="px-2 py-1 border-gray-300 bg-gray-700 text-sm border text-gray-300 rounded"><%= page %></span>
+      <% else %>
+        <a href='<%= insert_page_to_url(url, page) %>' class="px-2 py-1 border-gray-300 bg-white text-sm border text-gray-700 rounded"><%= page %></a>
+      <% end %>
+    <% end %>
+    <% if pagination[:page] < pagination[:total_pages] %>
+      <a href='<%= insert_page_to_url(url, pagination[:page] + 1) %>' class="px-2 py-1 border-gray-300 bg-white text-sm border text-gray-700 rounded">Next</a>
+    <% end %>
+    <a href='<%= insert_page_to_url(url, pagination[:total_pages]) %>' class="px-2 py-1 border-gray-300 bg-white text-sm border text-gray-700 rounded">Last</a>
+  </div>
+</div>

@@ -52,6 +52,15 @@ module ActiveTracker
         @filters ||= ["/#{ActiveTracker::Configuration.mountpoint}"]
       end
 
+      def self.per_page=(value)
+        @per_page = value
+      end
+
+      def self.per_page
+        @per_page ||= 20
+        @per_page.to_i
+      end
+
       def self.current_tags_clear
         @tags = {}
       end
@@ -91,7 +100,7 @@ module ActiveTracker
           data_type: "full",
           expiry: 7.days,
           log_at: Time.current
-        ) if ActiveTracker::Plugin::Request.current_tags.any?
+        ) if ActiveTracker::Plugin::Request.current_tags.any? && ActiveTracker::Plugin::Request.current_tags[:id].present?
       end
 
       def self.filter_request?(path)

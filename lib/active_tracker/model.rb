@@ -52,6 +52,27 @@ module ActiveTracker
       key
     end
 
+    def self.paginate(items, page, per_page)
+      page = (page || 1).to_i
+
+      total = items.length
+      start_point = (page - 1) * per_page
+
+      items = items[start_point, per_page]
+
+      total_pages = total / per_page
+      total_pages += 1 if (total % per_page != 0)
+
+      window = []
+      window << page - 2 if page > 2
+      window << page - 1 if page > 1
+      window << page
+      window << page + 1 if (total_pages - page) > 0
+      window << page + 2 if (total_pages - page) > 1
+
+      [items, {total: total, total_pages: total_pages, page: page, window: window}]
+    end
+
     def initialize(key, value)
       @attrs = {key: key}
       key.gsub!(/^A#{PREFIX}/, "")
