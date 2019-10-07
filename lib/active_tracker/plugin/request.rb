@@ -57,11 +57,11 @@ module ActiveTracker
       end
 
       def self.tag_current(tags = {})
-        @tags = @tags.merge(tags)
+        @tags = current_tags.merge(tags)
       end
 
       def self.current_tags
-        @tags
+        @tags || {}
       end
 
       def self.app_name
@@ -74,10 +74,6 @@ module ActiveTracker
         tag_current url: event.payload[:path]
         tag_current method: event.payload[:method]
         tag_current app: app_name
-        # Move these to the Civo apps
-        # tags[:email] = request.headers["X-CivoCom-User-Email"] if request.headers["X-CivoCom-User-Email"].present?
-        # tags[:civocom_request_path] = request.headers["X-CivoCom-Request-Path"] if request.headers["X-CivoCom-Request-Path"].present?
-        # tags[:civocom_request_id] = request.headers["X-CivoCom-RequestID"] if request.headers["X-CivoCom-RequestID"].present?
       end
 
       def self.output_capture(output)
@@ -85,11 +81,12 @@ module ActiveTracker
       end
 
       def self.record_duration(duration)
-        return if filter_request?(ActiveTracker::Plugin::Request.current_tags[:url])
+        return if ActiveTracker::Plugin::Request.current_tags[:url] && filter_request?(ActiveTracker::Plugin::Request.current_tags[:url])
 
         @duration = duration
+        log = @logger.lines[0, 65535] rescue ""
 
-        ActiveTracker::Model.save("Request", {log: @logger.lines[0, 65535], output: @output},
+        ActiveTracker::Model.save("Request", {log: log, output: @output},
           tags: ActiveTracker::Plugin::Request.current_tags,
           data_type: "full",
           expiry: 7.days,
@@ -98,7 +95,6 @@ module ActiveTracker
       end
 
       def self.filter_request?(path)
-        Rails.logger.debug("ActiveTracker should filter #{path}?")
         ActiveTracker::Plugin::Request.filters.each do |filter|
           if filter.is_a?(Regexp)
             if filter.match(path)
