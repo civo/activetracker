@@ -1,8 +1,28 @@
 <div class="flex w-full justify-between items-center">
-  <h1 class="text-xl text-blue-900 flex-1">Requests</h1>
-  <form action="">
-    <input type='text' class="bg-gray-100 border-2 border-gray-400 px-2 py-1 rounded-lg" placeholder="Search for request">
-  </form>
+  <h1 class="text-xl text-blue-900 flex-1">Query</h1>
+</div>
+
+<div class="flex flex-grow mt-10 items-center">
+  <div class="rounded-lg bg-white text-sm text-gray-600 flex-1">
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">SQL</div>
+      <div class="pl-4 font-mono"><%= @query.tags[:sql] %></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Name</div>
+      <% if @query.tags[:name].present? %>
+        <div class="ml-4 block bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= @query.tags[:name] %></div>
+      <% end %>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Count</div>
+      <div class="pl-4"><%= @query.count %></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Duration</div>
+      <div class="pl-4"><%= "%.1f" % @query.last_duration %>ms</div>
+    </div>
+  </div>
 </div>
 
 <div class="bg-white shadow mt-4 rounded-b-lg" style="">
@@ -18,7 +38,7 @@
     <a href='<%= ActiveTracker::Configuration.root_path +  "/requests/#{request.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
       <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:method] %></span></div>
       <div class="flex-1 break-all"><%= request.tags[:url] %>
-        <% showable_tags = (request.tags.keys - %i{url method status duration user_avatar_url params at_queries}) %>
+        <% showable_tags = (request.tags.keys - %i{url method status duration user_avatar_url params}) %>
         <% if showable_tags.any? %>
           <br />
           <% showable_tags.each do |k| %>
@@ -45,5 +65,3 @@
     </a>
   <% end -%>
 </div>
-
-<%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>

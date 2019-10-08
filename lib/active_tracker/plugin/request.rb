@@ -14,13 +14,17 @@ module ActiveTracker
         end
 
         ActiveSupport::Notifications.subscribe "process_action.action_controller" do |*args|
-          event = ActiveSupport::Notifications::Event.new *args
+          event = ActiveSupport::Notifications::Event.new(*args)
           request_processed(event)
         end
 
         Rails.application.middleware.use ActiveTracker::OutputCapturer
 
-        true
+        @@registered = true
+      end
+
+      def self.registered?
+        @@registered rescue false
       end
 
       def self.resources_name
@@ -40,25 +44,12 @@ module ActiveTracker
         "Requests"
       end
 
-      def self.root_path
-        "/#{ActiveTracker::Configuration.mountpoint}"
-      end
-
       def self.filters=(value)
         @filters = value
       end
 
       def self.filters
         @filters ||= ["/#{ActiveTracker::Configuration.mountpoint}"]
-      end
-
-      def self.per_page=(value)
-        @per_page = value
-      end
-
-      def self.per_page
-        @per_page ||= 20
-        @per_page.to_i
       end
 
       def self.current_tags_clear
@@ -121,13 +112,3 @@ module ActiveTracker
     end
   end
 end
-
-__END__
-
-
-
-
-    ActiveTracker::Model.save("Job", {log: @log},
-      tags: {job_name: @name, app: app_name, id: SecureRandom.uuid, duration: "#{(@end-@start).to_i}ms"},
-      data_type: "output", expiry: 7.days, log_at: Time.current)
-

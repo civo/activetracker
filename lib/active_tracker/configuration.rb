@@ -3,12 +3,6 @@ module ActiveTracker
     def self.plugins
       @@plugins ||= [
         ActiveTracker::Plugin::Request,
-        # ActiveTracker::Plugin::Schedule,
-        # ActiveTracker::Plugin::Exception,
-        # ActiveTracker::Plugin::ActiveJob,
-        # ActiveTracker::Plugin::ActionMail,
-        # ActiveTracker::Plugin::Event,
-        # ActiveTracker::Plugin::ActiveRecord,
       ]
       @@plugins
     end
@@ -42,8 +36,21 @@ module ActiveTracker
       @@mountpoint ||= "activetracker"
     end
 
+    def self.root_path
+      "/#{mountpoint}"
+    end
+
     def self.mountpoint=(path)
       @@mountpoint = path
+    end
+
+    def self.per_page=(value)
+      @@per_page = value
+    end
+
+    def self.per_page
+      @@per_page ||= 20
+      @@per_page.to_i
     end
 
     def self.authentication(&block)
