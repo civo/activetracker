@@ -2,8 +2,8 @@
 #
 # ActiveTracker::Plugin::Request       # Entire request log, with response
 # ActiveTracker::Plugin::Query         # Queries performed with ms taken
-# ActiveTracker::Plugin::Schedule      # When a scheduled job is queued
 # ActiveTracker::Plugin::Exception     # When an exception is raised
+# ActiveTracker::Plugin::Schedule      # When a scheduled job is queued
 # ActiveTracker::Plugin::ActiveJob     # When a job is processed, with output
 # ActiveTracker::Plugin::ActionMail    # When an email is sent, with the body
 # ActiveTracker::Plugin::Event         # Random events triggered in the system
@@ -11,6 +11,7 @@
 ActiveTracker::Configuration.plugins = [
   ActiveTracker::Plugin::Request,
   ActiveTracker::Plugin::Query,
+  ActiveTracker::Plugin::Exception,
 ]
 
 # You should change this to be your correct Redis URL

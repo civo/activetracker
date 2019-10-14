@@ -12,6 +12,8 @@ module ActiveTracker
       @request = ActiveTracker::Model.find(params[:id])
       query_ids = JSON.parse(@request.tags[:at_queries]) rescue []
       @queries = query_ids.map {|id| ActiveTracker::Model.find(id) rescue nil}.compact
+      exception_ids = JSON.parse(@request.tags[:at_exceptions]) rescue []
+      @exceptions = exception_ids.map {|id| ActiveTracker::Model.find(id) rescue nil}.compact
     end
   end
 end

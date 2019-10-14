@@ -56,7 +56,7 @@ module ActiveTracker
           obj.data["count"] = (obj.data["count"] || 0) + 1
           # Enough for most git commits to be referenced
           # so should be fine for SQL query hashes within an application
-          obj.id = Digest::SHA2.hexdigest(tags.inspect)[0,8]
+          obj.id = "Q" + Digest::SHA2.hexdigest(tags.inspect)[0,8]
           obj.expiry = 7.days
           obj.log_at = Time.current
 

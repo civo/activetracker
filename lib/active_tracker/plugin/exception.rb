@@ -2,7 +2,13 @@ module ActiveTracker
   module Plugin
     class Exception < Base
       def self.register
-        true
+        Rails.application.middleware.insert_after BetterErrors::Middleware, ActiveTracker::ExceptionCapturer
+
+        @@registered = true
+      end
+
+      def self.registered?
+        @@registered rescue false
       end
 
       def self.resources_name
@@ -21,6 +27,67 @@ module ActiveTracker
       def self.nav_title
         "Exceptions"
       end
+
+      def self.exception_capture(class_name, message, backtrace)
+        return if filter_exception?(class_name)
+
+        tags = {
+          class_name: class_name,
+          backtrace_hash: Digest::SHA2.hexdigest(backtrace.first.to_s),
+        }
+
+        ActiveTracker::Model.find_or_create("Exception", tags:tags, data_type: "full") do |obj|
+          if obj.persisted
+            ActiveTracker::Model.delete(obj.key)
+          end
+          obj.data ||= {}
+          obj.data["count"] = (obj.data["count"] || 0) + 1
+          # Enough for most git commits to be referenced
+          # so should be fine for exception hashes within an application
+          obj.id = "E" + Digest::SHA2.hexdigest(tags.inspect)[0,8]
+          obj.expiry = 7.days
+          obj.log_at = Time.current
+
+          obj.data["backtrace"] = backtrace
+          obj.data["message"] = message
+
+          obj.data["at_requests"] ||= []
+          if ActiveTracker::Plugin::Request.registered?
+            id = ActiveTracker::Plugin::Request.current_tags[:id] rescue nil
+            obj.data["at_requests"].prepend(id) if id.present?
+            obj.data["at_requests"] = obj.data["at_requests"][0,20]
+            ActiveTracker::Plugin::Request.current_tags[:at_exceptions] ||= []
+            ActiveTracker::Plugin::Request.current_tags[:at_exceptions] << obj.id
+          end
+        end
+
+        # Add current request to exception
+        # Save to Model
+        # Create ID from class_name/message/first line of backtrace
+        # Link to current request
+      end
+
+      def self.filter_exception?(class_name)
+        ActiveTracker::Plugin::Query.filters.each do |filter|
+          if filter.is_a?(Regexp)
+            if filter.match(class_name)
+              return true
+            end
+          elsif filter.is_a?(String)
+            if class_name == filter
+              return true
+            end
+          elsif filter.is_a?(Exception)
+            if class_name == filter.class.name
+              return true
+            end
+          end
+        end
+
+        false
+      end
+
+
     end
   end
 end

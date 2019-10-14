@@ -18,7 +18,7 @@ module ActiveTracker
           request_processed(event)
         end
 
-        Rails.application.middleware.use ActiveTracker::OutputCapturer
+        Rails.application.middleware.insert_before Rack::Sendfile, ActiveTracker::OutputCapturer
 
         @@registered = true
       end
@@ -85,6 +85,10 @@ module ActiveTracker
 
         @duration = duration
         log = @logger.lines[0, 65535] rescue ""
+
+        _, status, duration = @logger.lines.match(/Completed (\d+) .*? in (\d+)ms/ms).to_a
+        tag_current status: status
+        tag_current duration: "#{duration.to_i}ms"
 
         ActiveTracker::Model.save("Request", {log: log, output: @output},
           tags: ActiveTracker::Plugin::Request.current_tags,

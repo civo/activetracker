@@ -31,7 +31,7 @@ module ActiveTracker
         "#{k}:#{CGI.escape(v.to_s)}"
       end.join("*")
 
-      keys += "*"
+      keys += "*" unless keys.end_with?("*")
 
       if data_type
         keys += "/#{data_type}"

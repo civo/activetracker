@@ -1,17 +1,17 @@
 module ActiveTracker
   class OutputCapturer
-    def initialize(app, taggers = nil)
+    def initialize(app)
       @app         = app
-      @taggers     = taggers || []
     end
 
     def call(env)
       start_time = Time.current
       status, headers, response = @app.call(env)
+      [status, headers, response]
+    ensure
       capture(response)
       duration = (Time.current.to_f - start_time.to_f) * 1000
       ActiveTracker::Plugin::Request.record_duration(duration)
-      [status, headers, response]
     end
 
     def capture(response)

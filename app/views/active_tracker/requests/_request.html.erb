@@ -1,0 +1,29 @@
+<% border_size = @requests.last == request ? "none" : "2" %>
+<a href='<%= ActiveTracker::Configuration.root_path +  "/requests/#{request.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
+  <div class="w-24"><span class="bg-gray-200 text-gray-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:method] %></span></div>
+  <div class="flex-1 break-all"><%= request.tags[:url] %>
+    <% showable_tags = request.tags.keys.reject {|k| ["url", "method", "status", "duration", "user_avatar_url", "params", /\Aat_.*/].any? {|r| k.to_s.match(r) } } %>
+    <% if showable_tags.any? %>
+      <br />
+      <% showable_tags.each do |k| %>
+        <span class="bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= "#{k}:#{request.tags[k]}" %></span>
+      <% end %>
+    <% end %>
+    <!--
+      TODO: make these links that further filters the results
+    -->
+  </div>
+  <% if request.tags[:status].start_with?("2") %>
+    <div class="w-24"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+  <% elsif request.tags[:status].start_with?("3") %>
+    <div class="w-24"><span class="bg-yellow-100 text-yellow-600 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+  <% elsif request.tags[:status].start_with?("4") %>
+    <div class="w-24"><span class="bg-orange-200 text-orange-700 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+  <% elsif request.tags[:status].start_with?("5") %>
+    <div class="w-24"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= request.tags[:status] %></span></div>
+  <% end %>
+  <div class="w-32 text-center">
+    <b class="block"><%= request.tags[:duration] %></b>
+    <%= request.log_at.strftime("%-d %B %Y %H:%M:%S %z") %>
+  </div>
+</a>

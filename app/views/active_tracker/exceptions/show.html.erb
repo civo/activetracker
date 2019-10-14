@@ -1,0 +1,56 @@
+<div class="flex w-full justify-between items-center">
+  <h1 class="text-xl text-blue-900 flex-1">Exception</h1>
+</div>
+
+<div class="flex flex-grow mt-10 items-center">
+  <div class="rounded-lg bg-white text-sm text-gray-600 flex-1">
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Class</div>
+      <div class="pl-4 font-mono"><%= @exception.tags[:class_name] %></div>
+    </div>
+    <div class="flex flex-grow items-center text-gray-600">
+      <div class="bg-gray-200 uppercase w-32 p-4">Message</div>
+      <div class="ml-4 block mt-1 inline-block"><%= @exception.message %></div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Count</div>
+      <div class="pl-4">
+        <% if @exception.count < 10 %>
+          <div class="w-24"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold"><%= @exception.count %></span></div>
+        <% elsif @exception.count < 40 %>
+          <div class="w-24"><span class="bg-yellow-100 text-yellow-600 rounded-full px-3 py-2 font-bold"><%= @exception.count %></span></div>
+        <% elsif @exception.count < 100 %>
+          <div class="w-24"><span class="bg-orange-200 text-orange-700 rounded-full px-3 py-2 font-bold"><%= @exception.count %></span></div>
+        <% else %>
+          <div class="w-24"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= @exception.count %></span></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="flex flex-grow items-center">
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Last raised</div>
+      <div class="pl-4"><%= @exception.log_at %></div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-10 flex-grow-0">
+  <div>
+    <a href="#" class="text-lg mr-3 text-blue-600 js-activetracker-tab" data-tab="backtrace">Backtrace</a>
+  </div>
+
+  <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content" data-content="backtrace"><%= @exception.backtrace.join("<div class='mb-2'></div>").html_safe %></div>
+</div>
+
+
+<div class="bg-white shadow mt-10 rounded-b-lg" style="">
+  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+    <div class="w-24">Method</div>
+    <div class="flex-1">Path</div>
+    <div class="w-24">Response</div>
+    <div class="w-32 text-right">Time</div>
+  </div>
+
+  <% @requests.each do |request| %>
+    <%= render "active_tracker/requests/request", request: request %>
+  <% end -%>
+</div>
