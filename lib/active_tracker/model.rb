@@ -5,6 +5,8 @@ module ActiveTracker
     PREFIX = "/ActiveTracker".freeze
 
     def self.find(key)
+      return nil if ActiveTracker.connection_offline?
+
       connection = ActiveTracker.connection
       value = connection.get(key)
       if value.nil?
@@ -23,6 +25,8 @@ module ActiveTracker
     end
 
     def self.all(type, tags: {}, data_type: nil)
+      return [] if ActiveTracker.connection_offline?
+
       keys = "#{PREFIX}/#{type}/"
 
       keys += "*"
@@ -53,6 +57,8 @@ module ActiveTracker
     end
 
     def self.save(type, data, tags: {}, data_type: nil, expiry: 7.days, log_at: Time.current)
+      return nil if ActiveTracker.connection_offline?
+
       if log_at.respond_to?(:strftime)
         log_time = log_at.strftime("%Y%m%d%H%M%S")
       else

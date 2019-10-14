@@ -18,6 +18,20 @@ module ActiveTracker
     end
 
     @redis ||= Redis.new(url: ActiveTracker::Configuration.redis_url)
+
+    begin
+      @redis.ping
+    rescue
+      @redis = nil
+    end
+
+    @redis
+  rescue Errno::ECONNREFUSED, Redis::CannotConnectError
+    @redis = nil
+  end
+
+  def self.connection_offline?
+    !connection
   end
 end
 
