@@ -86,7 +86,7 @@ module ActiveTracker
         @duration = duration
         log = @logger.lines[0, 65535] rescue ""
 
-        _, status, duration = (@logger&.lines || "").match(/Completed (\d+) .*? in (\d+)ms/ms).to_a
+        _, status, duration = (@logger&.lines || "").force_encoding("UTF-8").match(/Completed (\d+) .*? in (\d+)ms/m).to_a
         tag_current status: status
         tag_current duration: "#{duration.to_i}ms"
 

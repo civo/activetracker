@@ -64,7 +64,7 @@ module ActiveTracker
           if ActiveTracker::Plugin::Request.registered?
             id = ActiveTracker::Plugin::Request.current_tags[:id] rescue nil
             obj.data["at_requests"].prepend(id) if id.present?
-            obj.data["at_requests"] = obj.data["requests"][0,20]
+            obj.data["at_requests"] = obj.data["at_requests"][0,20]
             ActiveTracker::Plugin::Request.current_tags[:at_queries] ||= []
             ActiveTracker::Plugin::Request.current_tags[:at_queries] << obj.id
           end
