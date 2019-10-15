@@ -31,7 +31,9 @@ module ActiveTracker
   end
 
   def self.connection_offline?
-    !connection
+    offline = !connection
+    Rails.logger.error("ActiveTracker: Redis is offline/unreachable")
+    offline
   end
 end
 
