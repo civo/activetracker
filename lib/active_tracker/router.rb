@@ -12,11 +12,5 @@ module ActiveTracker
       end
       Rails.application.routes.instance_variable_set(:@url_helpers, nil)
     end
-
-    def self.reload
-      load
-      Rails.application.routes_reloader.reload!
-      Rails.application.reload_routes!
-    end
   end
 end

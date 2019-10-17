@@ -1,2 +1,4 @@
-//= link_directory ../javascripts/active_tracker .js
-//= link_directory ../stylesheets/active_tracker .css
+//= link_tree ../javascripts
+//= link_tree ../stylesheets
+//= link_tree ../images
+//= link active_tracker/active_tracker.css

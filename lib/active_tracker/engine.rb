@@ -12,9 +12,6 @@ module ActiveTracker
       end
     end
 
-    initializer "active_tracker.assets.precompile" do |app|
-      app.config.assets.precompile += %w( active_tracker/active_tracker.js active_tracker/active_tracker.css )
-    end
-
+    config.assets.precompile += %w(active_tracker_manifest)
   end
 end

@@ -3,7 +3,7 @@
   <head>
     <title>ActiveTracker</title>
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <%= csp_meta_tag rescue nil %>
 
     <%= stylesheet_link_tag    'active_tracker/active_tracker', media: 'all' %>
     <%= javascript_include_tag 'active_tracker/active_tracker' %>

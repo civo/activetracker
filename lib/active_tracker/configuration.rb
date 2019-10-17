@@ -17,8 +17,6 @@ module ActiveTracker
       end
 
       @@plugins = items.dup
-      ActiveTracker::Router.reload
-      @@plugins
     end
 
     def self.redis_url
