@@ -1,5 +1,5 @@
 module ActiveTracker
-  class DashboardController < ApplicationController
+  class DashboardController < ActiveTracker::BaseController
     def index
 
     end

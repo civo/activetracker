@@ -1,5 +1,5 @@
 module ActiveTracker
-  class RequestsController < ApplicationController
+  class RequestsController < ActiveTracker::BaseController
     def index
       ts = Time.current.to_f
       @requests = ActiveTracker::Model.all("Request")

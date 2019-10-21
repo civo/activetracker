@@ -1,6 +1,8 @@
 module ActiveTracker
-  class ApplicationController < ActionController::Base
+  class BaseController < ActionController::Base
     protect_from_forgery with: :exception
+
+    layout "active_tracker/active_tracker"
 
     before_action do
       if ActiveTracker::Configuration.authentication.is_a? String

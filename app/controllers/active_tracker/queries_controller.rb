@@ -1,5 +1,5 @@
 module ActiveTracker
-  class QueriesController < ApplicationController
+  class QueriesController < ActiveTracker::BaseController
     def index
       ts = Time.current.to_f
       @queries = ActiveTracker::Model.all("Query")

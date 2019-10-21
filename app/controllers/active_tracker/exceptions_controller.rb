@@ -1,5 +1,5 @@
 module ActiveTracker
-  class ExceptionsController < ApplicationController
+  class ExceptionsController < ActiveTracker::BaseController
     def index
       ts = Time.current.to_f
       @exceptions = ActiveTracker::Model.all("Exception")
