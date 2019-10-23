@@ -2,7 +2,8 @@
 
 ActiveTracker is a Ruby gem that you install to your application to track user requests through your logs, see errors raised, queue usage/failures along with other things configured via a plugin architecture.
 
-![Overview of ActiveTracker](https://raw.githubusercontent.com/civo/images/master/overview.png)
+![Overview of ActiveTracker](https://user-images.githubusercontent.com/22904/67408234-9edf6300-f5b0-11e9-8eb5-eda79642e15f.png)
+
 
 ## Installation
 
