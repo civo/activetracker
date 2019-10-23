@@ -1,7 +1,7 @@
 <div class="flex w-full justify-between items-center">
   <h1 class="text-xl text-blue-900 flex-1">Queries</h1>
-  <form action="">
-    <input type='text' class="bg-gray-100 border-2 border-gray-400 px-2 py-1 rounded-lg" placeholder="Search for query">
+  <form action="<%= ActiveTracker::Configuration.root_path +  "/queries" %>" method="get" class="js-filter-form">
+    <input type='text' name="q" class="bg-gray-100 border-2 border-gray-400 px-2 py-1 rounded-lg js-filter-input" placeholder="Search for request" value="<%= params[:q] %>">
   </form>
 </div>
 

@@ -4,10 +4,11 @@
   <div class="flex-1 break-all"><%= request.tags[:url] %>
     <% showable_tags = request.tags.keys.reject {|k| ["url", "method", "duration", "user_avatar_url", "params", /\Aat_.*/].any? {|r| k.to_s.match(r) } } %>
     <% if showable_tags.any? %>
-      <br />
+      <div class="js-tags">
       <% showable_tags.each do |k| %>
-        <span class="bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block tag-filter" data-tag="#{k}:#{request.tags[k]}"><%= "#{k}:#{request.tags[k]}" %></span>
+        <span class="bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= "#{k}:#{request.tags[k]}" %></span>
       <% end %>
+      </div>
     <% end %>
     <!--
       TODO: make these links that further filters the results
