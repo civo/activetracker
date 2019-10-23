@@ -31,12 +31,48 @@ module ActiveTracker
         "Queries"
       end
 
+      def self.statistics
+        ret = []
+        queries = ActiveTracker::Model.all("Query")
+        queries = queries.select {|e| e.log_at >= 60.minutes.ago}
+
+        num_queries = 0
+        slow_queries = 0
+        total_duration = 0
+
+        queries.each do |query|
+          actual_query = ActiveTracker::Model.find(query.key)
+          next unless actual_query
+          slow_queries += actual_query.count if actual_query.last_duration > self.min_slow_duration_ms
+          num_queries += actual_query.count
+          total_duration += actual_query.last_duration * actual_query.count
+        end
+
+        ret << {plugin: self, label: "Queries/hour", value: num_queries}
+        if slow_queries == 0
+          ret << {plugin: self, label: "Slow queries/hour", value: slow_queries}
+        else
+          ret << {plugin: self, label: "Slow queries/hour", value: slow_queries, error: true}
+        end
+        ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)}
+
+        ret
+      end
+
       def self.filters=(value)
         @filters = value
       end
 
       def self.filters
         @filters ||= ["SCHEMA", /^$/]
+      end
+
+      def self.min_slow_duration_ms=(value)
+        @min_slow_duration_ms = value
+      end
+
+      def self.min_slow_duration_ms
+        @min_slow_duration_ms ||= 100
       end
 
       def self.capture_query(event)
@@ -58,7 +94,7 @@ module ActiveTracker
           # so should be fine for SQL query hashes within an application
           obj.id = "Q" + Digest::SHA2.hexdigest(tags.inspect)[0,8]
           obj.expiry = 7.days
-          obj.log_at = Time.current
+          obj.log_at = Time.now
 
           obj.data["at_requests"] ||= []
           if ActiveTracker::Plugin::Request.registered?
@@ -90,13 +126,3 @@ module ActiveTracker
     end
   end
 end
-
-__END__
-
-
-
-
-    ActiveTracker::Model.save("Job", {log: @log},
-      tags: {job_name: @name, app: app_name, id: SecureRandom.uuid, duration: "#{(@end-@start).to_i}ms"},
-      data_type: "output", expiry: 7.days, log_at: Time.current)
-

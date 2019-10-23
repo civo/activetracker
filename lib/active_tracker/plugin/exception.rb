@@ -15,6 +15,23 @@ module ActiveTracker
         :exceptions
       end
 
+      def self.statistics
+        ret = []
+        @exceptions = ActiveTracker::Model.all("Exception")
+        num_exceptions = @exceptions.count
+        exceptions_last_day = @exceptions.select {|e| e.log_at >= 1.day.ago}.count
+        exceptions_last_30_minutes = @exceptions.select {|e| e.log_at >= 30.minutes.ago}.count
+
+        ret << {plugin: self, label: "Last 24 hours", value: exceptions_last_day}
+        if exceptions_last_30_minutes == 0
+          ret << {plugin: self, label: "Last 30 min", value: exceptions_last_30_minutes}
+        else
+          ret << {plugin: self, label: "Last 30 min", value: exceptions_last_30_minutes, error: true}
+        end
+
+        ret
+      end
+
       def self.nav_svg
         svg = <<~EOF
           <svg width="16" height="16" viewBox="0 0 16 16" class="fill-current" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +63,7 @@ module ActiveTracker
           # so should be fine for exception hashes within an application
           obj.id = "E" + Digest::SHA2.hexdigest(tags.inspect)[0,8]
           obj.expiry = 7.days
-          obj.log_at = Time.current
+          obj.log_at = Time.now
 
           obj.data["backtrace"] = backtrace
           obj.data["message"] = message
