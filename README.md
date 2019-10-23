@@ -77,6 +77,8 @@ The first example uses HTTP Basic authentication and the latter will reject unau
 
 ## Request plugin
 
+<img width="400" alt="Screenshot 2019-10-23 at 16 19 14" src="https://user-images.githubusercontent.com/22904/67408530-0d242580-f5b1-11e9-9d64-51bf52125978.png"> <img width="400" alt="Screenshot 2019-10-23 at 16 19 20" src="https://user-images.githubusercontent.com/22904/67408531-0d242580-f5b1-11e9-8cb6-62c81a84936f.png">
+
 
 ## Upcoming plans
 
