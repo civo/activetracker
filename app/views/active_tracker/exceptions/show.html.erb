@@ -28,7 +28,7 @@
     </div>
     <div class="flex flex-grow items-center">
       <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Last raised</div>
-      <div class="pl-4"><%= @exception.log_at %></div>
+      <div class="pl-4"><%= time_ago_in_words @exception.log_at %> ago</div>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@
     </div>
     <div class="flex flex-grow items-center">
       <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">When</div>
-      <div class="pl-4"><%= @request.log_at.strftime("%-d %B %Y, %H:%M:%S %z") %></div>
+      <div class="pl-4"><%= time_ago_in_words @request.log_at %> ago</div>
     </div>
   </div>
 

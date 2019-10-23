@@ -33,7 +33,7 @@
         <% else %>
           <div class="w-24 text-center"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
         <% end %>
-        <div class="w-32 text-center"><%= actual_exception.log_at %></div>
+        <div class="w-32 text-right"><%= time_ago_in_words actual_exception.log_at %> ago</div>
       </a>
     <% end -%>
   </div>

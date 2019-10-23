@@ -24,6 +24,6 @@
   <% end %>
   <div class="w-32 text-center">
     <b class="block"><%= request.tags[:duration] %></b>
-    <%= request.log_at.strftime("%-d %B %Y %H:%M:%S %z") %>
+    <%= time_ago_in_words request.log_at %> ago
   </div>
 </a>
