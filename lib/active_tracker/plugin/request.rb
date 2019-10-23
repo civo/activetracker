@@ -52,12 +52,13 @@ module ActiveTracker
         num_requests = @requests.count
 
         percentage_error = 0
+        avg_milliseconds = 0
         if num_requests > 0
           num_errors = @requests.map {|r| r.tags[:status][0]}.select {|s| s=="4" || s=="5"}.count
           percentage_error = num_errors / @requests.count.to_f * 100.0
+          avg_milliseconds = @requests.map {|r| r.tags[:duration].to_i}.sum / num_requests
         end
 
-        avg_milliseconds = @requests.map {|r| r.tags[:duration].to_i}.sum / num_requests
 
         ret << {plugin: self, label: "Requests/hour", value: num_requests}
         if percentage_error < 1.0
@@ -65,7 +66,7 @@ module ActiveTracker
         else
           ret << {plugin: self, label: "Error percentage", value: "%.1f%%" % percentage_error, error: true}
         end
-        ret << {plugin: self, label: "Avg time/request", value: "#{avg_milliseconds}ms"}
+        ret << {plugin: self, label: "Avg time/request", value: "#{avg_milliseconds}ms"} if avg_milliseconds
 
         ret
       end

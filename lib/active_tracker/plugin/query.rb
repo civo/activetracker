@@ -54,7 +54,7 @@ module ActiveTracker
         else
           ret << {plugin: self, label: "Slow queries/hour", value: slow_queries, error: true}
         end
-        ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)}
+        ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)} if num_queries > 0
 
         ret
       end
