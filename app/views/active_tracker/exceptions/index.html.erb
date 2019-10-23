@@ -5,34 +5,38 @@
   </form>
 </div>
 
-<div class="bg-white shadow mt-4 rounded-b-lg" style="">
-  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
-    <div class="flex-1">Class / Message</div>
-    <div class="w-24 text-center">Count</div>
-    <div class="w-32 text-right">Last raised</div>
+<% if @exceptions && @exceptions.any? %>
+  <div class="bg-white shadow mt-4 rounded-b-lg" style="">
+    <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+      <div class="flex-1">Class / Message</div>
+      <div class="w-24 text-center">Count</div>
+      <div class="w-32 text-right">Last raised</div>
+    </div>
+
+    <% @exceptions.each do |exception| %>
+      <% actual_exception = ActiveTracker::Model.find(exception.key) %>
+      <% border_size = @exceptions.last == exception ? "none" : "2" %>
+      <a href='<%= ActiveTracker::Configuration.root_path +  "/exceptions/#{exception.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
+        <div class="flex-1 break-all"><span class="font-mono text-sm"><%= actual_exception.tags[:class_name] %></span> <span class="text-gray-800"><%= actual_exception.message %></span>
+          <% if actual_exception.backtrace.present? %>
+            <br /><div class="block bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= actual_exception.backtrace.first %></div>
+          <% end %>
+        </div>
+        <% if actual_exception.count < 10 %>
+          <div class="w-24 text-center"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
+        <% elsif actual_exception.count < 40 %>
+          <div class="w-24 text-center"><span class="bg-yellow-100 text-yellow-700 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
+        <% elsif actual_exception.count < 100 %>
+          <div class="w-24 text-center"><span class="bg-orange-200 text-orange-700 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
+        <% else %>
+          <div class="w-24 text-center"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
+        <% end %>
+        <div class="w-32 text-center"><%= actual_exception.log_at %></div>
+      </a>
+    <% end -%>
   </div>
 
-  <% @exceptions.each do |exception| %>
-    <% actual_exception = ActiveTracker::Model.find(exception.key) %>
-    <% border_size = @exceptions.last == exception ? "none" : "2" %>
-    <a href='<%= ActiveTracker::Configuration.root_path +  "/exceptions/#{exception.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
-      <div class="flex-1 break-all"><span class="font-mono text-sm"><%= actual_exception.tags[:class_name] %></span> <span class="text-gray-800"><%= actual_exception.message %></span>
-        <% if actual_exception.backtrace.present? %>
-          <br /><div class="block bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= actual_exception.backtrace.first %></div>
-        <% end %>
-      </div>
-      <% if actual_exception.count < 10 %>
-        <div class="w-24 text-center"><span class="bg-green-100 text-green-600 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
-      <% elsif actual_exception.count < 40 %>
-        <div class="w-24 text-center"><span class="bg-yellow-100 text-yellow-700 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
-      <% elsif actual_exception.count < 100 %>
-        <div class="w-24 text-center"><span class="bg-orange-200 text-orange-700 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
-      <% else %>
-        <div class="w-24 text-center"><span class="bg-red-300 text-red-800 rounded-full px-3 py-2 font-bold"><%= actual_exception.count %></span></div>
-      <% end %>
-      <div class="w-32 text-center"><%= actual_exception.log_at %></div>
-    </a>
-  <% end -%>
-</div>
-
-<%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+  <%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+<% else %>
+  <%= render "active_tracker/common/empty", plural_type: "exceptions" %>
+<% end %>

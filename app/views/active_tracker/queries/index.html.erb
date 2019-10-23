@@ -5,26 +5,30 @@
   </form>
 </div>
 
-<div class="bg-white shadow mt-4 rounded-b-lg" style="">
-  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
-    <div class="flex-1">SQL</div>
-    <div class="w-24 text-right">Count</div>
-    <div class="w-32 text-right">Last response</div>
+<% if @queries && @queries.any? %>
+  <div class="bg-white shadow mt-4 rounded-b-lg" style="">
+    <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+      <div class="flex-1">SQL</div>
+      <div class="w-24 text-right">Count</div>
+      <div class="w-32 text-right">Last response</div>
+    </div>
+
+    <% @queries.each do |query| %>
+      <% actual_query = ActiveTracker::Model.find(query.key) %>
+      <% border_size = @queries.last == query ? "none" : "2" %>
+      <a href='<%= ActiveTracker::Configuration.root_path +  "/queries/#{query.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
+        <div class="flex-1 break-all font-mono"><%= actual_query.tags[:sql] %>
+          <% if actual_query.tags[:name].present? %>
+            <br /><div class="block bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= actual_query.tags[:name] %></div>
+          <% end %>
+        </div>
+        <div class="w-24 text-right"><%= actual_query.count %></div>
+        <div class="w-32 text-center"><%= "%.1f" % actual_query.last_duration %>ms</div>
+      </a>
+    <% end -%>
   </div>
 
-  <% @queries.each do |query| %>
-    <% actual_query = ActiveTracker::Model.find(query.key) %>
-    <% border_size = @queries.last == query ? "none" : "2" %>
-    <a href='<%= ActiveTracker::Configuration.root_path +  "/queries/#{query.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
-      <div class="flex-1 break-all font-mono"><%= actual_query.tags[:sql] %>
-        <% if actual_query.tags[:name].present? %>
-          <br /><div class="block bg-gray-200 text-gray-900 py-1 px-2 text-xs rounded no-wrap mt-1 inline-block"><%= actual_query.tags[:name] %></div>
-        <% end %>
-      </div>
-      <div class="w-24 text-right"><%= actual_query.count %></div>
-      <div class="w-32 text-center"><%= "%.1f" % actual_query.last_duration %>ms</div>
-    </a>
-  <% end -%>
-</div>
-
-<%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+  <%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+<% else %>
+  <%= render "active_tracker/common/empty", plural_type: "queries" %>
+<% end %>

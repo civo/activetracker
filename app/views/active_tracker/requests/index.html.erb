@@ -5,18 +5,22 @@
   </form>
 </div>
 
-<div class="bg-white shadow mt-4 rounded-b-lg" style="">
-  <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
-    <div class="w-24">Method</div>
-    <div class="flex-1">Path</div>
-    <div class="w-24">Response</div>
-    <div class="w-32 text-right">Time</div>
+<% if @results && @results.any? %>
+  <div class="bg-white shadow mt-4 rounded-b-lg" style="">
+    <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
+      <div class="w-24">Method</div>
+      <div class="flex-1">Path</div>
+      <div class="w-24">Response</div>
+      <div class="w-32 text-right">Time</div>
+    </div>
+
+    <% @requests.each do |request| %>
+      <%= render "active_tracker/requests/request", request: request %>
+    <% end -%>
+
   </div>
 
-  <% @requests.each do |request| %>
-    <%= render "active_tracker/requests/request", request: request %>
-  <% end -%>
-
-</div>
-
-<%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+  <%= render "active_tracker/common/pagination", pagination: @pagination, url: request.fullpath, duration: @duration %>
+<% else %>
+  <%= render "active_tracker/common/empty", plural_type: "requests" %>
+<% end %>
