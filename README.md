@@ -353,7 +353,7 @@ module ActiveTracker
 end
 ```
 
-For styling, have a look at the Tailwind classes used in the views for other plugins and try to maintain consistent styling - unless you're willing to upgrade all other plugins ;-)
+For styling, have a look at the Tailwind classes used in the views for other plugins and try to maintain consistent styling - unless you're willing to upgrade all other plugins 😉
 
 Once you've written your plugin, you can add it to `integration/templates/initializer.rb` either uncommented if it will be a new default plugin, or at least to the comment block at the top for available plugins.
 
