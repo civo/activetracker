@@ -55,9 +55,9 @@ ActiveTracker::Configuration.plugins = [
 ]
 ```
 
-This will enable any Rails integration necessary and add them to the left bar.
+This will enable any Rails integration necessary and add them to ActiveTracker's sidebar.
 
-ActiveTracker stores its data in Redis. We recommend a separate Redis installation for this, with a memory limit set and configured to automatically delete least recently used items - like this:
+ActiveTracker stores its data in Redis. We recommend a separate Redis installation for this, with a memory limit set and configured to automatically delete least recently used items - put some lines like this in your Redis configuration file:
 
 ```
 maxmemory 250mb
