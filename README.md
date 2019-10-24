@@ -7,6 +7,7 @@ ActiveTracker is a Ruby gem implementing an engine that you add to your Rails ap
 ## Contents
 
 * [Installation](#installation)
+    * [Quickstart](#tl-dr-quickstart)
 * [Configuration](#configuration)
 * [Request plugin](#request-plugin)
     * [Filters](#filters)
@@ -42,9 +43,24 @@ Then run:
 
     $ bundle exec rails activetracker:install
 
+After this you can run your Rails application and visit http://your-host/activetracker to see ActiveTracker's capturing of your requests, etc.
+
+#### TL;DR - Quickstart
+
+```sh
+echo "gem 'activetracker'" >> Gemfile
+bundle
+bundle exec rails activetracker:install
+rails s
+# Then open http://localhost:3000/activetracker and hit other pages
+# on your site
+```
+
 ## Configuration
 
 After you run the `rails activetracker:install` command, you will have a file called `activetracker.rb` in `config/initializers`. This file controls which ActiveTracker plugins are enabled and configuring ActiveTracker as a whole as well as each individual plugin.
+
+#### Selecting plugins
 
 Configuring the list of plugins is as easy as listing them:
 
@@ -56,6 +72,8 @@ ActiveTracker::Configuration.plugins = [
 ```
 
 This will enable any Rails integration necessary and add them to ActiveTracker's sidebar.
+
+#### Redis
 
 ActiveTracker stores its data in Redis. We recommend a separate Redis installation for this, with a memory limit set and configured to automatically delete least recently used items - put some lines like this in your Redis configuration file:
 
@@ -70,17 +88,23 @@ You should point ActiveTracker to your Redis server within the `activetracker.rb
 ActiveTracker::Configuration.redis_url = "redis://localhost:6379/15"
 ```
 
+#### Pagination
+
 If you don't like the default number of items per page in ActiveTracker, you can change it with:
 
 ```
 ActiveTracker::Configuration.per_page = 50
 ```
 
+#### Different mountpoint
+
 You can choose to have ActiveTracker available anywhere if you don't like the default of `/activetracker`:
 
 ```
 ActiveTracker::Configuration.mountpoint = "debugger"
 ```
+
+#### Authentication
 
 If you want to setup authentication for your installation:
 
