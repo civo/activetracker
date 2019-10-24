@@ -45,6 +45,14 @@ module ActiveTracker
         "Exceptions"
       end
 
+      def self.filters=(value)
+        @filters = value
+      end
+
+      def self.filters
+        @filters ||= []
+      end
+
       def self.exception_capture(class_name, message, backtrace)
         return if filter_exception?(class_name)
 
@@ -77,15 +85,10 @@ module ActiveTracker
             ActiveTracker::Plugin::Request.current_tags[:at_exceptions] << obj.id
           end
         end
-
-        # Add current request to exception
-        # Save to Model
-        # Create ID from class_name/message/first line of backtrace
-        # Link to current request
       end
 
       def self.filter_exception?(class_name)
-        ActiveTracker::Plugin::Query.filters.each do |filter|
+        ActiveTracker::Plugin::Exception.filters.each do |filter|
           if filter.is_a?(Regexp)
             if filter.match(class_name)
               return true

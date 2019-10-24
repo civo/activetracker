@@ -79,6 +79,98 @@ The first example uses HTTP Basic authentication and the latter will reject unau
 
 <img width="400" alt="Screenshot 2019-10-23 at 16 19 14" src="https://user-images.githubusercontent.com/22904/67408530-0d242580-f5b1-11e9-9d64-51bf52125978.png"> <img width="400" alt="Screenshot 2019-10-23 at 16 19 20" src="https://user-images.githubusercontent.com/22904/67408531-0d242580-f5b1-11e9-8cb6-62c81a84936f.png">
 
+> The request plugin captures the log and output from every request your Rails application receives.
+
+There is a limit of 64KB for the log, but the full output is captured for every request.
+
+#### Filters
+
+You can filter requests from being captured by adding to the `activetracker` initializer lines like:
+
+```ruby
+ActiveTracker::Plugin::Request.filters << /foobar/
+# or 
+ActiveTracker::Plugin::Request.filters += "/foobar"
+# or replace them entirely with
+ActiveTracker::Plugin::Request.filters = ["/foobar"]
+```
+
+By default ActiveTracker itself is filtered out. If a string is supplied it must match the start of the path of the request, not just any portion. Regular expression filters are applied against the whole path.
+
+#### Tagging your own requests
+
+During a request cycle you can add custom tags to requests:
+
+```
+ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
+```
+
+If you want to have the user details shown alongside a request, you can use some standard tag names of `user_avatar_url`, `user_name` and `user_email` and these will be picked up and displayed alongside the request when viewing it.
+
+#### Redaction
+
+The easiest way of ensuring values such as passwords in the log and output aren't leaked to ActiveTracker is to tell ActiveTracker to explicitly redact that value. For example, in your controller:
+
+```
+def login
+  ActiveTracker::Plugin::Request.redact(Current.user.password_hash)
+  ActiveTracker::Plugin::Request.redact(params[:password])
+end
+```
+
+These are cleared upon each request.
+
+## Query plugin
+
+<img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png">
+<img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
+
+> The query plugin saves a count for each SQL query executed and how long it too, to enable you to find overly frequent queries or overly slow queries.
+
+#### Filters
+
+You can filter queries from being captured by adding to the `activetracker` initializer lines to search both the SQL and the ActiveRecord `name` of the query (e.g. `Order Load`) like this:
+
+```ruby
+ActiveTracker::Plugin::Query.filters << /secret_records/
+# or 
+ActiveTracker::Plugin::Query.filters += "secret_records"
+# or replace them entirely with
+ActiveTracker::Plugin::Query.filters = ["secret_records"]
+```
+
+By default ActiveTracker filters out queries containing either `SCHEMA` or an empty value. These values are searched anywhere in the SQL or `name`.
+
+#### Slow queries
+
+You can configure a threshold of how slow a query has to be before it's highlighted with a red time value using:
+
+```ruby
+ActiveTracker::Plugin::Query.min_slow_duration_ms = 25
+```
+
+By default this is set to 100ms, but this is probably too loose for most applications.
+
+## Exception plugin
+
+<img width="400" alt="Screenshot 2019-10-24 at 09 03 53" src="https://user-images.githubusercontent.com/22904/67465517-3ee2ce00-f63d-11e9-8395-104ec31f046e.png">
+<img width="400" alt="Screenshot 2019-10-24 at 09 03 59" src="https://user-images.githubusercontent.com/22904/67465525-42765500-f63d-11e9-82b1-e2b904c20025.png">
+
+> The exception plugin tracks unhandled exceptions, incrementing a counter for them and keeping a backtrace to where the error occured.
+
+#### Filters
+
+You can filter certain exceptions from being captured by adding to the `activetracker` initializer lines to specify a class name like this:
+
+```ruby
+ActiveTracker::Plugin::Query.filters << ActiveRecord::RecordNotFound
+# or 
+ActiveTracker::Plugin::Query.filters += "ActiveRecord::RecordNotFound"
+# or replace them entirely with
+ActiveTracker::Plugin::Query.filters = [/.*RecordNotFound/]
+```
+
+There are no exception filters by default. Strings and classes have to be exact matches, but regular expressions match against the name normally.
 
 ## Upcoming plans
 
@@ -207,6 +299,8 @@ module ActiveTracker
 end
 ```
 
+For styling, have a look at the Tailwind classes used in the views for other plugins and try to maintain consistent styling - unless you're willing to upgrade all other plugins ;-)
+
 Once you've written your plugin, you can add it to `integration/templates/initializer.rb` either uncommented if it will be a new default plugin, or at least to the comment block at the top for available plugins.
 
 ## How can I help?
@@ -222,6 +316,8 @@ However, if you are looking for a way to help out but don't have any ideas, we'v
 **Automated testing** Having no experience of automated testing a Rails engine, if anyone fancies putting in some testing for us - we'd *LOVE* that!
 
 **Responsive** We chose [Tailwind CSS](https://tailwindcss.com) because it's lovely to work with and you can quickly/easily put together fairly nice interfaces. It's also built to be responsive, but as this is a small, spare time project for us we haven't had chance to do this yet.
+
+**Dark mode** Some of our team love dark displays, but the main author of this gem doesn't. So while we'd love to have it, it's not high enough on the priority list to justify at the moment.
 
 ## Contributing
 

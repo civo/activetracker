@@ -23,7 +23,11 @@
           <% end %>
         </div>
         <div class="w-24 text-right"><%= actual_query.count %></div>
-        <div class="w-32 text-center"><%= "%.1f" % actual_query.last_duration %>ms</div>
+        <% if actual_query.last_duration > ActiveTracker::Plugin::Query.min_slow_duration_ms %>
+          <div class="w-32 text-center text-red-600"><%= "%.1f" % actual_query.last_duration %>ms</div>
+        <% else %>
+          <div class="w-32 text-center"><%= "%.1f" % actual_query.last_duration %>ms</div>
+        <% end %>
       </a>
     <% end -%>
   </div>

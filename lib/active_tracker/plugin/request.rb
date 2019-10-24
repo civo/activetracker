@@ -7,7 +7,7 @@ module ActiveTracker
         Rails.logger.extend(ActiveSupport::Logger.broadcast(@logger))
 
         ActiveSupport::Notifications.subscribe "start_processing.action_controller" do |event|
-          current_tags_clear
+          clear_context
           @logger.reset
           tag_current(id: SecureRandom.uuid)
           @output = ""
@@ -79,8 +79,9 @@ module ActiveTracker
         @filters ||= ["/#{ActiveTracker::Configuration.mountpoint}"]
       end
 
-      def self.current_tags_clear
+      def self.clear_context
         @tags = {}
+        @redactions = []
       end
 
       def self.tag_current(tags = {})
@@ -89,6 +90,10 @@ module ActiveTracker
 
       def self.current_tags
         @tags || {}
+      end
+
+      def self.redact(value)
+        @redactions << value
       end
 
       def self.app_name
@@ -117,12 +122,17 @@ module ActiveTracker
         tag_current status: status
         tag_current duration: "#{duration.to_i}ms"
 
+        log = apply_redactions(log)
+        @output = apply_redactions(@output)
+
         ActiveTracker::Model.save("Request", {log: log, output: @output},
           tags: ActiveTracker::Plugin::Request.current_tags,
           data_type: "full",
           expiry: 7.days,
           log_at: Time.now
         ) if ActiveTracker::Plugin::Request.current_tags.any? && ActiveTracker::Plugin::Request.current_tags[:id].present?
+
+        clear_context
       end
 
       def self.filter_request?(path)
@@ -140,6 +150,14 @@ module ActiveTracker
 
         false
       end
+
+      def self.apply_redactions(value)
+        (@redactions || []).each do |redaction|
+          value = value.gsub(redaction, "[REDACTED]")
+        end
+        value
+      end
+
     end
   end
 end
