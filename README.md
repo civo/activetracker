@@ -236,7 +236,7 @@ Using Rails notifications track cache hits and misses for each key.
 
 #### Events
 
-We'd like a simple system of triggering events from within the your application that simply are recorded to ActiveTracker. So maybe a key, a description and a backtrace would be enough?
+We'd like a simple system of triggering events from within your application that simply are recorded to ActiveTracker. So maybe a key, a description and a backtrace would be enough?
 
 ## Writing plugins
 
