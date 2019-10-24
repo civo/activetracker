@@ -122,9 +122,10 @@ The first example uses HTTP Basic authentication and the latter will reject unau
 
 ## Request plugin
 
+> The request plugin captures the log and output from every request your Rails application receives.
+
 <img width="400" alt="Screenshot 2019-10-23 at 16 19 14" src="https://user-images.githubusercontent.com/22904/67408530-0d242580-f5b1-11e9-9d64-51bf52125978.png"> <img width="400" alt="Screenshot 2019-10-23 at 16 19 20" src="https://user-images.githubusercontent.com/22904/67408531-0d242580-f5b1-11e9-8cb6-62c81a84936f.png">
 
-> The request plugin captures the log and output from every request your Rails application receives.
 
 There is a limit of 64KB for the log, but the full output is captured for every request.
 
@@ -169,9 +170,9 @@ These are cleared upon each request.
 
 ## Query plugin
 
-<img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png"> <img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
-
 > The query plugin saves a count for each SQL query executed and how long it took, to enable you to find queries executed too often or queries you consider to be too slow for your application.
+
+<img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png"> <img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
 
 #### Filters
 
@@ -199,9 +200,9 @@ By default this is set to 100ms, but this is probably too loose for most applica
 
 ## Exception plugin
 
-<img width="400" alt="Screenshot 2019-10-24 at 09 03 53" src="https://user-images.githubusercontent.com/22904/67465517-3ee2ce00-f63d-11e9-8395-104ec31f046e.png"> <img width="400" alt="Screenshot 2019-10-24 at 09 03 59" src="https://user-images.githubusercontent.com/22904/67465525-42765500-f63d-11e9-82b1-e2b904c20025.png">
-
 > The exception plugin tracks unhandled exceptions, incrementing a counter for them and keeping a backtrace to where the error occured.
+
+<img width="400" alt="Screenshot 2019-10-24 at 09 03 53" src="https://user-images.githubusercontent.com/22904/67465517-3ee2ce00-f63d-11e9-8395-104ec31f046e.png"> <img width="400" alt="Screenshot 2019-10-24 at 09 03 59" src="https://user-images.githubusercontent.com/22904/67465525-42765500-f63d-11e9-82b1-e2b904c20025.png">
 
 #### Filters
 
