@@ -2,7 +2,7 @@
 
 The icon used as part of ActiveTracker's logo was a free/promotional order from Logofound.com (order #24181, September 27, 2019).
 
-When used as part of referring to ActiveTracker, it should not be used as implying any form of endorsement.
+When used as part of referring to ActiveTracker, it should not be used in any way implying any form of endorsement.
 
 ## Original SVG
 
