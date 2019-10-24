@@ -105,6 +105,8 @@ During a request cycle you can add custom tags to requests:
 ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
 ```
 
+These tags are then shown alongside every request, and if you click the tag you can filter the requests down to only those matching that tag(s).
+
 If you want to have the user details shown alongside a request, you can use some standard tag names of `user_avatar_url`, `user_name` and `user_email` and these will be picked up and displayed alongside the request when viewing it.
 
 #### Redaction
