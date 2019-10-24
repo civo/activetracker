@@ -88,7 +88,7 @@ You should point ActiveTracker to your Redis server within the `activetracker.rb
 ActiveTracker::Configuration.redis_url = "redis://localhost:6379/15"
 ```
 
-#### Pagination
+#### Pagination
 
 If you don't like the default number of items per page in ActiveTracker, you can change it with:
 
