@@ -1,6 +1,6 @@
 # ActiveTracker
 
-ActiveTracker is a Ruby gem implementing an engine that you add to your Rails application to track user requests through your logs, see errors raised, query usage along with other things configured via a plugin architecture.
+> ActiveTracker is a Ruby gem implementing an engine that you add to your Rails application to track user requests through your logs, see errors raised, query usage along with other things configured via a plugin architecture.
 
 ![Overview of ActiveTracker](https://user-images.githubusercontent.com/22904/67408234-9edf6300-f5b0-11e9-8eb5-eda79642e15f.png)
 
