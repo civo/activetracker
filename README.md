@@ -7,7 +7,7 @@ ActiveTracker is a Ruby gem implementing an engine that you add to your Rails ap
 ## Contents
 
 * [Installation](#installation)
-    * [Quickstart](#tl-dr-quickstart)
+    * [Quickstart](##tldr---quickstart)
 * [Configuration](#configuration)
 * [Request plugin](#request-plugin)
     * [Filters](#filters)
@@ -45,7 +45,7 @@ Then run:
 
 After this you can run your Rails application and visit http://your-host/activetracker to see ActiveTracker's capturing of your requests, etc.
 
-#### TL;DR - Quickstart
+### TL;DR - Quickstart
 
 ```sh
 echo "gem 'activetracker'" >> Gemfile
