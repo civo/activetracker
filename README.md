@@ -144,7 +144,7 @@ By default ActiveTracker itself is filtered out. If a string is supplied it must
 
 #### Tagging your own requests
 
-During a request cycle you can add custom tags to requests:
+During a request cycle you can add custom tags to requests by putting lines like this in your controller, model, helper, service, etc:
 
 ```
 ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
@@ -152,7 +152,7 @@ ActiveTracker::Plugin::Request.tag_current(key: value, key2: value2)
 
 These tags are then shown alongside every request, and if you click the tag you can filter the requests down to only those matching that tag(s).
 
-If you want to have the user details shown alongside a request, you can use some standard tag names of `user_avatar_url`, `user_name` and `user_email` and these will be picked up and displayed alongside the request when viewing it.
+The tag names `user_avatar_url`, `user_name` and `user_email` have special meaning, if you set these tags, they will be displayed alongside the request in a nice format when you view it (see "Test McPerson" in the right hand screenshot above).
 
 #### Redaction
 
@@ -171,7 +171,7 @@ These are cleared upon each request.
 
 <img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png"> <img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
 
-> The query plugin saves a count for each SQL query executed and how long it too, to enable you to find overly frequent queries or overly slow queries.
+> The query plugin saves a count for each SQL query executed and how long it took, to enable you to find queries executed too often or queries you consider to be too slow for your application.
 
 #### Filters
 
