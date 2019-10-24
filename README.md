@@ -122,8 +122,7 @@ These are cleared upon each request.
 
 ## Query plugin
 
-<img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png">
-<img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
+<img width="400" alt="Screenshot 2019-10-24 at 08 55 40" src="https://user-images.githubusercontent.com/22904/67464913-1a3a2680-f63c-11e9-9ba8-e1d28fcfa54f.png"> <img width="400" alt="Screenshot 2019-10-24 at 08 55 45" src="https://user-images.githubusercontent.com/22904/67464921-1c03ea00-f63c-11e9-95dc-568d5d8754ce.png">
 
 > The query plugin saves a count for each SQL query executed and how long it too, to enable you to find overly frequent queries or overly slow queries.
 
@@ -141,7 +140,7 @@ ActiveTracker::Plugin::Query.filters = ["secret_records"]
 
 By default ActiveTracker filters out queries containing either `SCHEMA` or an empty value. These values are searched anywhere in the SQL or `name`.
 
-#### Slow queries
+#### Slow queries
 
 You can configure a threshold of how slow a query has to be before it's highlighted with a red time value using:
 
@@ -153,8 +152,7 @@ By default this is set to 100ms, but this is probably too loose for most applica
 
 ## Exception plugin
 
-<img width="400" alt="Screenshot 2019-10-24 at 09 03 53" src="https://user-images.githubusercontent.com/22904/67465517-3ee2ce00-f63d-11e9-8395-104ec31f046e.png">
-<img width="400" alt="Screenshot 2019-10-24 at 09 03 59" src="https://user-images.githubusercontent.com/22904/67465525-42765500-f63d-11e9-82b1-e2b904c20025.png">
+<img width="400" alt="Screenshot 2019-10-24 at 09 03 53" src="https://user-images.githubusercontent.com/22904/67465517-3ee2ce00-f63d-11e9-8395-104ec31f046e.png"> <img width="400" alt="Screenshot 2019-10-24 at 09 03 59" src="https://user-images.githubusercontent.com/22904/67465525-42765500-f63d-11e9-82b1-e2b904c20025.png">
 
 > The exception plugin tracks unhandled exceptions, incrementing a counter for them and keeping a backtrace to where the error occured.
 
@@ -176,13 +174,21 @@ There are no exception filters by default. Strings and classes have to be exact 
 
 The next set of plugins we're planning on writing are:
 
-**Resque** Statistics for current queue lengths and current amounts of failed jobs. Clicking the sidebar will list jobs on each queue and failed jobs - just like the Resque Web UI but all in the same place as your other ActiveTracker monitoring panes.
+#### Resque
 
-**Mail** Recording when emails are sent from your system, along with their body for easy previewing of what was sent and when.
+Statistics for current queue lengths and current amounts of failed jobs. Clicking the sidebar will list jobs on each queue and failed jobs - just like the Resque Web UI but all in the same place as your other ActiveTracker monitoring panes.
 
-**Cache** Using Rails notifications track cache hits and misses for each key.
+#### Mail
 
-**Events** We'd like a simple system of triggering events from within the your application that simply are recorded to ActiveTracker. So maybe a key, a description and a backtrace would be enough?
+Recording when emails are sent from your system, along with their body for easy previewing of what was sent and when.
+
+#### Cache
+
+Using Rails notifications track cache hits and misses for each key.
+
+#### Events
+
+We'd like a simple system of triggering events from within the your application that simply are recorded to ActiveTracker. So maybe a key, a description and a backtrace would be enough?
 
 ## Writing plugins
 
@@ -309,15 +315,25 @@ The most obvious way to help is by jumping in and raising issues, creating your 
 
 However, if you are looking for a way to help out but don't have any ideas, we've listed a few below that we'd appreciate some help with (we'll hopefully get to all of them over time, but have our own list above that we're planning on first):
 
-**Webpacker** Currently ActiveTracker uses the asset pipeline. We'd love it if it would work with Webpacker or the asset pipeline (and maybe it already does), whichever the containing project is using.
+#### Webpacker
 
-**Ajax loading of results** We would love to have it Ajaxified so if you stay on the page (and maybe click a button to enable the feature) it automatically puts a banner bar at the top of results saying "New requests/queries/whatever available" and if you click it, the new entries will be Ajax loaded in.
+Currently ActiveTracker uses the asset pipeline. We'd love it if it would work with Webpacker or the asset pipeline (and maybe it already does), whichever the containing project is using.
 
-**Automated testing** Having no experience of automated testing a Rails engine, if anyone fancies putting in some testing for us - we'd *LOVE* that!
+#### Ajax loading of results
 
-**Responsive** We chose [Tailwind CSS](https://tailwindcss.com) because it's lovely to work with and you can quickly/easily put together fairly nice interfaces. It's also built to be responsive, but as this is a small, spare time project for us we haven't had chance to do this yet.
+We would love to have it Ajaxified so if you stay on the page (and maybe click a button to enable the feature) it automatically puts a banner bar at the top of results saying "New requests/queries/whatever available" and if you click it, the new entries will be Ajax loaded in.
 
-**Dark mode** Some of our team love dark displays, but the main author of this gem doesn't. So while we'd love to have it, it's not high enough on the priority list to justify at the moment.
+#### Automated testing
+
+Having no experience of automated testing a Rails engine, if anyone fancies putting in some testing for us - we'd *LOVE* that!
+
+#### Responsive
+
+We chose [Tailwind CSS](https://tailwindcss.com) because it's lovely to work with and you can quickly/easily put together fairly nice interfaces. It's also built to be responsive, but as this is a small, spare time project for us we haven't had chance to do this yet.
+
+#### Dark mode
+
+Some of our team love dark displays, but the main author of this gem doesn't. So while we'd love to have it, it's not high enough on the priority list to justify at the moment.
 
 ## Contributing
 
