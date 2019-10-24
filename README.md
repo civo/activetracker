@@ -8,6 +8,7 @@
 
 * [Installation](#installation)
     * [Quickstart](##tldr---quickstart)
+* [Prerequisites](#prerequisites)
 * [Configuration](#configuration)
 * [Request plugin](#request-plugin)
     * [Filters](#filters)
@@ -55,6 +56,12 @@ rails s
 # Then open http://localhost:3000/activetracker and hit other pages
 # on your site
 ```
+
+## Prequisites
+
+This gem is currently only tested against Rails 5.2. If you're using it with another version of Rails and it works, please let us know. If you find a bug with it using another version of Rails, please raise it as an [issue](https://github.com/civo/activetracker/issues).
+
+ActiveTracker stores its data in Redis, so you must have a Redis service available for it.
 
 ## Configuration
 
