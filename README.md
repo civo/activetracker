@@ -4,6 +4,27 @@ ActiveTracker is a Ruby gem implementing an engine that you add to your Rails ap
 
 ![Overview of ActiveTracker](https://user-images.githubusercontent.com/22904/67408234-9edf6300-f5b0-11e9-8eb5-eda79642e15f.png)
 
+## Contents
+
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Request plugin](#request-plugin)
+    * [Filters](#filters)
+    * [Tagging your own requests](#tagging-your-own-requests)
+    * [Redaction](#redaction)
+* [Query plugin](#query-plugin)
+    * [Filters](#filters-1)
+    * [Slow queries](#slow-queries)
+* [Exception plugin](#exception-plugin)
+    * [Filters](#filters-2)
+* [Upcoming plans](#upcoming-plans)
+* [Writing plugins](#writing-plugins)
+    * [The plugin itself](#1-the-plugin-itself)
+    * [Controller and views](#2-controllers-and-views)
+* [How can I help?](#how-can-i-help)
+* [Contributing](#contributing)
+* [Licence](#licence)
+
 
 ## Installation
 
@@ -341,6 +362,6 @@ Some of our team love dark displays, but the main author of this gem doesn't. So
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/civo/activetracker.
 
-## License
+## Licence
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT). The [ActiveTracker logo](doc/logo.md) was an icon downloaded from LogoFound.com and combined with the name in Helvetica Neue.
+The gem is available as open source under the terms of the [MIT Licence](https://opensource.org/licenses/MIT). The [ActiveTracker logo](doc/logo.md) was an icon downloaded from LogoFound.com and combined with the name in Helvetica Neue.
