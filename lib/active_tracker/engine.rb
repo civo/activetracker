@@ -4,15 +4,6 @@ module ActiveTracker
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
     config.eager_load_paths += Dir["#{config.root}/app/**/"]
 
-    initializer 'active_tracker_helper.action_controller' do
-      ActiveSupport.on_load :action_controller do
-        helper ActiveTracker::ImagesHelper
-        helper ActiveTracker::ApplicationHelper
-        helper ActiveTracker::PaginationHelper
-        helper ActiveTracker::OutputHelper
-      end
-    end
-
     config.generators do |g|
       g.test_framework :rspec, fixture: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'

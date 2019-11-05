@@ -4,6 +4,11 @@ module ActiveTracker
 
     layout "active_tracker/active_tracker"
 
+    helper ActiveTracker::ImagesHelper
+    helper ActiveTracker::ApplicationHelper
+    helper ActiveTracker::PaginationHelper
+    helper ActiveTracker::OutputHelper
+
     before_action do
       if ActiveTracker::Configuration.authentication.is_a? String
         username, password = ActiveTracker::Configuration.authentication.split(":")
