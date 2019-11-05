@@ -2,6 +2,7 @@ module ActiveTracker
   class Engine < ::Rails::Engine
     isolate_namespace ActiveTracker
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += Dir["#{config.root}/app/**/"]
 
     initializer 'active_tracker_helper.action_controller' do
       ActiveSupport.on_load :action_controller do
