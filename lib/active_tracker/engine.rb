@@ -19,6 +19,8 @@ module ActiveTracker
       g.helper false
     end
 
-    config.assets.precompile += %w(active_tracker_manifest active_tracker/active_tracker.js active_tracker/active_tracker.css)
+    if defined?(config.assets)
+      config.assets.precompile += %w(active_tracker_manifest active_tracker/active_tracker.js active_tracker/active_tracker.css)
+    end
   end
 end
