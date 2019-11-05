@@ -2,7 +2,7 @@ module ActiveTracker
   module Plugin
     class Exception < Base
       def self.register
-        Rails.application.middleware.insert_after BetterErrors::Middleware, ActiveTracker::ExceptionCapturer
+        Rails.application.middleware.insert_after ActionDispatch::ShowExceptions, ActiveTracker::ExceptionCapturer
 
         @@registered = true
       end

@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.4.1] - 2019-11-06
+## [0.4.2] - 2019-11-05
+### Fixed
+- API-only projects don't have BetterErrors enabled apparently
+
+## [0.4.1] - 2019-11-05
 ### Added
 - Added support for API-only projects that don't have an asset pipeline
 
-## [0.4.0] - 2019-11-05
+## [0.4.0] - 2019-11-04
 ### Release
 - First public release
