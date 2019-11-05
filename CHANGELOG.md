@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2019-11-05
+### Fixed
+- Error during initial project database migration if activetracker is used
+
 ## [0.4.2] - 2019-11-05
 ### Fixed
 - API-only projects don't have BetterErrors enabled apparently

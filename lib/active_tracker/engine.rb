@@ -19,7 +19,7 @@ module ActiveTracker
       g.helper false
     end
 
-    if defined?(config.assets)
+    if defined?(Sprockets)
       config.assets.precompile += %w(active_tracker_manifest active_tracker/active_tracker.js active_tracker/active_tracker.css)
     end
   end

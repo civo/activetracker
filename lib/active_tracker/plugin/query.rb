@@ -98,11 +98,16 @@ module ActiveTracker
 
           obj.data["at_requests"] ||= []
           if ActiveTracker::Plugin::Request.registered?
-            id = ActiveTracker::Plugin::Request.current_tags[:id] rescue nil
-            obj.data["at_requests"].prepend(id) if id.present?
-            obj.data["at_requests"] = obj.data["at_requests"][0,20]
-            ActiveTracker::Plugin::Request.current_tags[:at_queries] ||= []
-            ActiveTracker::Plugin::Request.current_tags[:at_queries] << obj.id
+            begin
+              id = ActiveTracker::Plugin::Request.current_tags[:id] rescue nil
+              obj.data["at_requests"].prepend(id) if id.present?
+              obj.data["at_requests"] = obj.data["at_requests"][0,20]
+              ActiveTracker::Plugin::Request.current_tags[:at_queries] ||= []
+              ActiveTracker::Plugin::Request.current_tags[:at_queries] << obj.id
+            rescue Exception
+              # Sometimes during initial DB migration this will fail to insert
+              # the current object
+            end
           end
         end
       end
