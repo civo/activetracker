@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.8] - 2019-11-05
+### Fixed
+- Removed unnecessary ActionMailer class
+
 ## [0.4.7] - 2019-11-05
 ### Fixed
 - Changed to config.eager_load_paths to try to avoid `ActiveTracker::Model` not defined in production
