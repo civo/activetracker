@@ -112,7 +112,7 @@ module ActiveTracker
 
     def initialize(key, value, persisted = true)
       @attrs = {key: key, persisted: persisted}
-      key.gsub!(/^A#{PREFIX}/, "")
+      key = key.gsub(/^A#{PREFIX}/, "")
       parts = key.split("/")
       _ = parts.shift # Starts with a /
       _ = parts.shift # then comes PREFIX

@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.4.3 & 0.4.4] - 2019-11-05
+## [0.4.3 - 0.4.5] - 2019-11-05
 ### Fixed
 - Error during initial project database migration if activetracker is used
 
