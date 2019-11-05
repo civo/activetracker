@@ -55,7 +55,15 @@
   </div>
 
   <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content" data-content="logs"><%= escape_ansi @request.log.strip %></div>
-  <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content hidden" data-content="response"><%= @request.output.strip %></div>
+  <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content hidden" data-content="response"><%=
+  output = @request.output
+
+  if (@request.content_type || "")["application/json"]
+    output = JSON.pretty_generate(JSON.parse(output))
+  end
+
+  output.strip
+   %></div>
   <div class="bg-white rounded-b-lg mt-2 overflow-x-auto js-activetracker-tab-content hidden" data-content="queries">
     <div class="bg-gray-200 text-gray-600 uppercase tracking-tight leading-none py-2 px-4 flex flex-grow">
       <div class="flex-1">SQL</div>

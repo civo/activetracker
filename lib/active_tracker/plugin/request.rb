@@ -108,8 +108,9 @@ module ActiveTracker
         tag_current app: app_name
       end
 
-      def self.output_capture(output)
+      def self.output_capture(output, content_type)
         @output = output
+        @content_type = content_type
       end
 
       def self.record_duration(duration)
@@ -125,7 +126,7 @@ module ActiveTracker
         log = apply_redactions(log)
         @output = apply_redactions(@output)
 
-        ActiveTracker::Model.save("Request", {log: log, output: @output},
+        ActiveTracker::Model.save("Request", {log: log, output: @output, content_type: @content_type},
           tags: ActiveTracker::Plugin::Request.current_tags,
           data_type: "full",
           expiry: 7.days,
