@@ -104,7 +104,7 @@ module ActiveTracker
               obj.data["at_requests"] = obj.data["at_requests"][0,20]
               ActiveTracker::Plugin::Request.current_tags[:at_queries] ||= []
               ActiveTracker::Plugin::Request.current_tags[:at_queries] << obj.id
-            rescue Exception
+            rescue Exception, ActiveRecord::StatementInvalid, NoMethodError
               # Sometimes during initial DB migration this will fail to insert
               # the current object
             end
