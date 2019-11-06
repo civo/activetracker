@@ -57,9 +57,11 @@
   <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content" data-content="logs"><%= escape_ansi @request.log.strip %></div>
   <div class="bg-black text-white font-mono whitespace-pre-wrap text-sm rounded-lg mt-2 p-4 overflow-x-auto js-activetracker-tab-content hidden" data-content="response"><%=
   output = @request.output
-
-  if (@request.content_type || "")["application/json"]
-    output = JSON.pretty_generate(JSON.parse(output))
+  begin
+    if (@request.content_type || "")["application/json"]
+      output = JSON.pretty_generate(JSON.parse(output))
+    end
+  rescue
   end
 
   output.strip
