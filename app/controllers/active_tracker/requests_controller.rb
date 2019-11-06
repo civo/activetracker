@@ -22,6 +22,7 @@ module ActiveTracker
     def filter_requests
       filters = params[:q].split(/\s+/)
       filtered = @requests.select do |request|
+        next if request.tags[:url].nil?
         acceptable = true
         filters.each do |filter|
           if filter[":"]
