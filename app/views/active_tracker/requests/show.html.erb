@@ -5,15 +5,15 @@
 <div class="flex flex-grow mt-10 items-center">
   <div class="rounded-lg bg-white text-sm text-gray-600 flex-1">
     <div class="flex flex-grow items-center">
-      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Method</div>
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4 flex-shrink-0">Method</div>
       <div class="pl-4"><span class="bg-gray-200 text-gray-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:method] %></span></div>
     </div>
     <div class="flex flex-grow items-center">
-      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Path</div>
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4 flex-shrink-0">Path</div>
       <div class="pl-4"><%= @request.tags[:url] %></div>
     </div>
     <div class="flex flex-grow items-center">
-      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">Status</div>
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4 flex-shrink-0">Status</div>
       <% if @request.tags[:status].start_with?("2") %>
         <div class="pl-4"><span class="bg-green-100 text-green-600 rounded-full px-2 py-1 text-sm font-bold"><%= @request.tags[:status] %></span></div>
       <% elsif @request.tags[:status].start_with?("3") %>
@@ -25,7 +25,7 @@
       <% end %>
     </div>
     <div class="flex flex-grow items-center">
-      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4">When</div>
+      <div class="bg-gray-200 text-gray-600 uppercase w-32 p-4 flex-shrink-0">When</div>
       <div class="pl-4"><%= time_ago_in_words @request.log_at %> ago</div>
     </div>
   </div>
