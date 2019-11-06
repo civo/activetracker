@@ -14,7 +14,8 @@
     </div>
 
     <% @queries.each do |query| %>
-      <% actual_query = ActiveTracker::Model.find(query.key) %>
+      <% actual_query = ActiveTracker::Model.find(query.key) rescue nil %>
+      <% next unless actual_query %>
       <% border_size = @queries.last == query ? "none" : "2" %>
       <a href='<%= ActiveTracker::Configuration.root_path +  "/queries/#{query.id}" %>' class="flex flex-grow border-b-<%= border_size %> border-gray-200 text-gray-600 px-4 text-sm py-6 items-center">
         <div class="flex-1 break-all font-mono"><%= actual_query.tags[:sql] %>
