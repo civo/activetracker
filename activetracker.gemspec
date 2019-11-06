@@ -44,6 +44,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "fakeredis"
   spec.add_development_dependency 'capybara'
   spec.add_development_dependency 'factory_girl_rails'
+  spec.add_development_dependency 'loofah', ">= 2.3.1"
 
   spec.add_dependency "redis", "~> 4.0"
 end
