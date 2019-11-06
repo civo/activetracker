@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.9] - 2019-11-06
+### Added
+- Pretty printing of JSON responses and minor display tweaks
+
 ## [0.4.8] - 2019-11-05
 ### Fixed
 - Removed unnecessary ActionMailer class

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    activetracker (0.4.8)
+    activetracker (0.4.9)
       redis (~> 4.0)
 
 GEM
