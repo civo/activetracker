@@ -41,7 +41,7 @@ module ActiveTracker
         total_duration = 0
 
         queries.each do |query|
-          actual_query = ActiveTracker::Model.find(query.key)
+          actual_query = ActiveTracker::Model.find(query.key) rescue nil
           next unless actual_query
           slow_queries += actual_query.count if actual_query.last_duration > self.min_slow_duration_ms
           num_queries += actual_query.count
