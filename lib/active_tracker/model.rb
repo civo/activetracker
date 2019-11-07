@@ -1,3 +1,4 @@
+require 'zlib'
 require 'json'
 
 module ActiveTracker
@@ -8,7 +9,7 @@ module ActiveTracker
       return nil if ActiveTracker.connection_offline?
 
       connection = ActiveTracker.connection
-      value = connection.get(key)
+      value = decompress(connection.get(key))
       if value.nil?
         raise NotFound.new("Couldn't find entry - #{key}")
       else
@@ -67,7 +68,7 @@ module ActiveTracker
       key = generate_key(type, log_time, tags, data_type)
       value = data.to_json
       connection = ActiveTracker.connection
-      connection.set(key, value)
+      connection.set(key, compress(value))
       connection.expire(key, expiry)
       if tags[:id].present?
         connection.set(tags[:id], key)
@@ -108,6 +109,16 @@ module ActiveTracker
       window << page + 2 if (total_pages - page) > 1
 
       [items, {total: total, total_pages: total_pages, page: page, window: window}]
+    end
+
+    def self.compress(text)
+      Zlib::Deflate.deflate(text)
+    end
+
+    def self.decompress(text)
+      Zlib::Inflate.inflate(text)
+    rescue Zlib::DataError
+      text
     end
 
     def initialize(key, value, persisted = true)
