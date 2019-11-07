@@ -15,7 +15,12 @@ module ActiveTracker
     end
 
     def capture(response, headers)
-      body = response.body rescue nil
+      if response.respond_to?(:body)
+        body = response.body rescue nil
+      else
+        body = response
+      end
+
       unless body.is_a?(String)
         body = body.to_a rescue [body.body] rescue "No body given"
       end
