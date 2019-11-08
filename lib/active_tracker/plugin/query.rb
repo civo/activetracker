@@ -33,28 +33,29 @@ module ActiveTracker
 
       def self.statistics
         ret = []
-        queries = ActiveTracker::Model.all("Query")
-        queries = queries.select {|e| e.log_at >= 60.minutes.ago}
+        # TODO: This is crazy slow and needs a rewrite/reconsider
+        # queries = ActiveTracker::Model.all("Query")
+        # queries = queries.select {|e| e.log_at >= 60.minutes.ago}
 
-        num_queries = 0
-        slow_queries = 0
-        total_duration = 0
+        # num_queries = 0
+        # slow_queries = 0
+        # total_duration = 0
 
-        queries.each do |query|
-          actual_query = ActiveTracker::Model.find(query.key) rescue nil
-          next unless actual_query
-          slow_queries += actual_query.count if actual_query.last_duration > self.min_slow_duration_ms
-          num_queries += actual_query.count
-          total_duration += actual_query.last_duration * actual_query.count
-        end
+        # queries.each do |query|
+        #   actual_query = ActiveTracker::Model.find(query.key) rescue nil
+        #   next unless actual_query
+        #   slow_queries += actual_query.count if actual_query.last_duration > self.min_slow_duration_ms
+        #   num_queries += actual_query.count
+        #   total_duration += actual_query.last_duration * actual_query.count
+        # end
 
-        ret << {plugin: self, label: "Queries/hour", value: num_queries}
-        if slow_queries == 0
-          ret << {plugin: self, label: "Slow queries/hour", value: slow_queries}
-        else
-          ret << {plugin: self, label: "Slow queries/hour", value: slow_queries, error: true}
-        end
-        ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)} if num_queries > 0
+        # ret << {plugin: self, label: "Queries/hour", value: num_queries}
+        # if slow_queries == 0
+        #   ret << {plugin: self, label: "Slow queries/hour", value: slow_queries}
+        # else
+        #   ret << {plugin: self, label: "Slow queries/hour", value: slow_queries, error: true}
+        # end
+        # ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)} if num_queries > 0
 
         ret
       end
