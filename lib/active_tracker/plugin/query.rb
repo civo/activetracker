@@ -31,9 +31,9 @@ module ActiveTracker
         "Queries"
       end
 
-      def self.statistics
-        ret = []
-        # TODO: This is crazy slow and needs a rewrite/reconsider
+      # TODO: This is crazy slow and needs a rewrite/reconsider
+      # def self.statistics
+      #   ret = []
         # queries = ActiveTracker::Model.all("Query")
         # queries = queries.select {|e| e.log_at >= 60.minutes.ago}
 
@@ -57,8 +57,8 @@ module ActiveTracker
         # end
         # ret << {plugin: self, label: "Avg time/query", value: "%.2fms" % (total_duration/num_queries)} if num_queries > 0
 
-        ret
-      end
+      #   ret
+      # end
 
       def self.filters=(value)
         @filters = value
